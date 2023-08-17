@@ -111,4 +111,19 @@ they are all packaged into single process known as the kubernetes controller man
 
 by default all controllers are enabled. --controllers stringSlice. 
 
+=======================================================================================================
+
+scheduler is only responsible for deciding which pod goes on which node. it does not actually place the pod on node. 
+kubectl captain of the ship is the one who creates the pod on the ship. 
+you need ensure right container on the right ship. 
+scheduler decides which nodes the pods are placed on depending on certain crtieria. 
+u may have pods with different resource requirements. 
+u can have nodes in the cluster dedicated to certain applications. 
+two phases: 
+pod requires 10 cpu 
+1. scheduler tries to filter out the nodes that dont fit the profile for this pod. 
+2. the scheduler ranks the nodes to identify the best fit for the pod. it uses a pririty function to assign a score to node on a scale of 0 to 10. 
+3. calcuates the amount of resources that would be free on the node after placing the pod on them. the more resource free would get the better rank. 
+
+
 
