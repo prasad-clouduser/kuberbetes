@@ -1,0 +1,40 @@
+ETCD: 
+Maintain Information about diff ships
+what container is on which ship. 
+what time it was loaded etc.
+
+cranes --> kube-scheduler
+scheduler identifies the right node to place a container on based on containerr resource requirements, the worker nodes capacity, or any other policies or contraints 
+such as taints and tolerations or node afffinity rules that are on them.
+
+operation team take care of ship handling, traffic control etc
+they deal with issues related to damages, the route to different ships take etc. 
+
+cargo team takes care of container, container are damaged destroed they make sure that new containers are available. 
+
+service office that takes care of the IT and communications between different ships. 
+
+Node controller --> onboarding new nodes to cluster, handling situations where nodes become unavailable or gets destroyed. 
+replication controller -> ensures that desired num of containers are running at all times in a replication group. 
+
+Kube Api server -> orchetrating all operations within the cluster 
+expose k8s apis to perform managment operations on the cluster by users. 
+as well as various contraollers to monitor the state of the cluster to make necessary changes as required and by the worker nodes to communicate with the server. 
+
+cargo ships. 
+captain is responsible for managing all activties on these ships. 
+captain is responsbile for liasing with the master ships,
+starting with letting the master ship know that they are interested in joinng the group, receiving info about the containers to be loaded on the ship.
+loading the appropriate container as required. 
+sending reports back to master about the status of the ship 
+and status of the containers on the ship etc. 
+captain -> kubelet. runs on each node. listen for instructions from the kube API server.
+and deploys or destroys containers on the nodes as required. 
+
+kube api server periodically fetches status reports from the kubelets to monitor status of nodes and ocntainer on them
+communications between worker nodes are enabled by another component that runs on the worker node known as kube proxy service 
+kube proxy service ensures that necessary rules are in place on the worker nodes to allow the containers running on them to reach each other. 
+
+
+
+
