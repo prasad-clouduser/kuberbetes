@@ -35,6 +35,38 @@ kube api server periodically fetches status reports from the kubelets to monitor
 communications between worker nodes are enabled by another component that runs on the worker node known as kube proxy service 
 kube proxy service ensures that necessary rules are in place on the worker nodes to allow the containers running on them to reach each other. 
 
+======================================
+
+kubernetis introduced a interface called container runtime interface (CRI)
+CRI allowed any vendor to work as container runtime for k8s as long as they adhere to the OCI standards. 
+OCI contains image spec and runtime spec. 
+an image spec defines the specifications on how an image should be built. 
+runtime spac define the standards on how any container runtime should be developed. 
+
+other runtimes continue to use CRI to work with k8s. 
+but docker uses dockerrshim to work k8s
+
+docker consists of many components not just runtime. api, cli, build. 
+finally also the containerr runtime called runC.
+and daemon that manage runc is called containerd. contaierd CRI compatible can work directly with k&s
+
+uncessary effort and added complications becaoz of dockershim, decided in 1.24 to remove dockershim compley support for docker is also removed. . 
+
+=====================
+every change that you make to the k8s server such as adding additonal nodes deploying pods or replica sets are updated in etcd server. 
+then only change considered to be complete one. 
+
+--advertise-client-url this is address on which edcd listens. 
+
+deploy cluster with kubeadm -> etcd server deployed as pod. 
+deploy cluster manually --> etcd run as service on master node. 
+
+initial-advertise url ==> if you have multiple master each want to know each other etcd server deployed on other masters. 
+kubeapi configured with etcd server url then only it can interact iwth etcd. 
+
+etcd root directory /registry.
+etcd client requires the certs and api version to connect to the etcd server. 
+
 
 
 
