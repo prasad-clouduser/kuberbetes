@@ -86,4 +86,29 @@ kubectl command infact reaching the kubeapi server.
 kubeapi server run as a pod when deployed the cluster with kubeadm tool. options can be viewed in /etc/kubernetes/manifests/kube-apiserver.yaml
 non kubeadm setup inspect the option by viewing the kube-apiserver service located at /etc/systemd/system/kube-apiserver.service. 
 
+===============================================
+kube controller manager: 
+in the kubernetes terms,  controller is a process that continuosly monitors the state of various components within the system and works towards brining the whole system 
+to the desired functioning state. 
+
+node controller -> is responsible for monitoring the status of the nodes and taking necessary actions to keep the applications running. 
+it does that through the kube api server. 
+
+1. node controller checks the status of the nodes every 5 sec. 
+2. that way the node controller can monitor the health of the nodes .
+3. if it stops the receiving the heartbeat from the node the node is marked as unreachabe
+4. but it waits for 40 sec before marking it as unreachable. 
+5. after marking node as unreachable, it gives it 5 min to come backup if it does not it removes the pod assigned to that node and provision them on healthy ones if 
+pods are part of replica set. 
+
+replication controller --> 
+
+responsible for monitor the status of replica sets and ensuring that desired num of pods are available at all times within the set. 
+if the pod dies it creates another one. 
+
+all controllers (job controler, node controller, etc etc) --> kind of brain behind lot of things in kubernetes. 
+they are all packaged into single process known as the kubernetes controller manager. 
+
+by default all controllers are enabled. --controllers stringSlice. 
+
 
