@@ -149,3 +149,18 @@ kubeproxy is the process that runs on each node in the k8s clsuter. its job is t
 rules on each node to forward traffic to those services to the backend pods. one way it does it using iptable rules .
 it creates the iptable rules on each node like (Service IP mapping to POD IP)
 
+====================
+
+two containers (Helper and actual app container) can also communicate with each other directly by referring to each other as local host since they share the same network space. 
+plus they can easily share the same storage space as well. 
+
+labels is a dictionary within the metadata dictionary. 
+
+=================================
+
+replication controller helps us to run multiple instances of a single pod in the kubernetes cluster. thus proviing HA. 
+balance the load across multiple pods on mulitple nodes. 
+
+selector is differece between replication controller (old tech but still selector field is there) and replica set.
+
+
