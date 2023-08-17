@@ -120,10 +120,32 @@ scheduler decides which nodes the pods are placed on depending on certain crtier
 u may have pods with different resource requirements. 
 u can have nodes in the cluster dedicated to certain applications. 
 two phases: 
-pod requires 10 cpu 
+consider pod requires 10 cpu 
 1. scheduler tries to filter out the nodes that dont fit the profile for this pod. 
 2. the scheduler ranks the nodes to identify the best fit for the pod. it uses a pririty function to assign a score to node on a scale of 0 to 10. 
 3. calcuates the amount of resources that would be free on the node after placing the pod on them. the more resource free would get the better rank. 
 
+=====================================================================================================================================
 
+Kubelet-> they load or unload containers on the ship as instructed by the scheduler on the master. they also send back the report at the regular intervals on the 
+status of the ship and containners on them,
+
+kubelet in the k8s worker node register the node with a kubernetes cluster. when it recieves instructions to load a container or pod on the node, it requests the container runtime engine which may be docker 
+to pull the required image and run an instance. 
+
+then kubectl continuosly to monitor the state of the pod and container in it and reports to the kube api server on a timely basis. 
+manully install the kubelet on the worker nodes. 
+
+======================================================================================================================================
+KUBE-PROXY: 
+
+a pod network is an internal virtual network that spans across all the nodes in the cluster to which all the pods connect to. 
+through this network, they are able to communicate with each other. 
+
+how to service gets an ip?? the service can't join the pod network, service is not an actual thing, it is not a container like pods, so it does not have any interfaces or an actively listening process. 
+it is virtual component that only lives in the kubernetes memory. 
+but then we also said that the service should be accessible across the cluster from any nodes. how this is achieved? that is where kube-proxy comes in.
+kubeproxy is the process that runs on each node in the k8s clsuter. its job is to look for new services and everytime a service is created, it creates the appropriate 
+rules on each node to forward traffic to those services to the backend pods. one way it does it using iptable rules .
+it creates the iptable rules on each node like (Service IP mapping to POD IP)
 
