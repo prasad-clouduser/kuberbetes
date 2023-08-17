@@ -164,5 +164,27 @@ balance the load across multiple pods on mulitple nodes.
 selector is differece between replication controller (old tech but still selector field is there) and replica set.
 The deployment automatically creates a ReplicaSet, replicaset ultimately creates the pods. 
 deployment uses for usecases, rolling updates, pause upgrade and start. 
+============================
+Services: 
+
+Service listens to a port on the node and forwards requests to the pods. 
+The port on the pod where the actual web server is running is 80 and referred to as targetport. this is where service forwards the requests to. 
+second port--> port on the service itself, it is simply referred to as port. 
+Service is infact like a virtual server inside the node. inside the cluster it has its own IP address. this is called cluster IP of the service. 
+finally we have port on the node itself. which we use to access the web server externally. that is known as node port. 
+
+target port optional if not provided will be same as Port field. 
+nodePort if not provided, will be taken from the free port 
+The service automatically select the all three pods as end points to forwards the external requests coming from user. 
+it uses random algarithm to balance the load. thus service acts built in load baalncer to distribute the load across different pods. 
+
+k8s automatically creates a service that spans across all the nodes in the cluster and maps the targetPort to the same nodePort on all the nodes in the cluster. 
+we can use any node in the cluster to launch 
+when pods are removed or added, the service is automatically updated, making it highly flexible and adaptive.
+
+
+
+
+
 
 
