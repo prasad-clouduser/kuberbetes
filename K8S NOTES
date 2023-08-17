@@ -67,6 +67,23 @@ kubeapi configured with etcd server url then only it can interact iwth etcd.
 etcd root directory /registry.
 etcd client requires the certs and api version to connect to the etcd server. 
 
+=============================
+kubectl command infact reaching the kubeapi server. 
 
+1. kube-apiserver first authenticates the request and validates it. 
+2. then it retrieves the data from the etcd cluster and responds back with requested info.
+=====================================
+
+1. request is authenticated first and then validated. 
+2. api server creates a pod object without assigning it to a node. 
+3. updates the info in the etcd server and updates the user tthat pod have been created. 
+4. scheduler continuosly monitor the api server and realizes that there is new pod with no node assigned. the scheduler identifies the new node to place the new pod on 
+   and communicates that back to the kube-apiserver. then api server updates info in the etcd cluster. 
+5. Then api server then passes that info to the kubelet in the appropriate worker node. 
+6. kubelet then create the pod on the node and instructs the container runtime engine to deploy the application image. 
+7. once done kubelet updates the status back to api server, then api server updates the data back in the etcd cluster. 
+
+kubeapi server run as a pod when deployed the cluster with kubeadm tool. options can be viewed in /etc/kubernetes/manifests/kube-apiserver.yaml
+non kubeadm setup inspect the option by viewing the kube-apiserver service located at /etc/systemd/system/kube-apiserver.service. 
 
 
