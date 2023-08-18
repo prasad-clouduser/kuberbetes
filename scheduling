@@ -42,9 +42,15 @@ schedule pods on the master node.
 Node Selectors: 
 
 if you want to place the POD on a specific node NODE A you can use node selector. suppose data processing POD on the larger node. scheduler based on the labels of node it decides to 
-schedule pod on the node. 
+schedule pod on the node. This does not complex operations like NotIN, exists, In 
 
 ===============================================================================================================
 
+Node affinity: 
+what if someone changes the label on the node at future point in time? will the pod continue to stay on the node ? answered by long sentence. 
+
+type of the node affinity defines the behaviour of the scheduler with respect to node affinity and stages in the life cycle of the pod. 
+
+=========================================
 
 
