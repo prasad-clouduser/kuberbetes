@@ -1,0 +1,11 @@
+
+1. the scheduler goes through all the pods and looks for thse that dont have this project node set. 
+2. those are candiate for scheudling. 
+3. then identify the right node to schedule on using scheduling algarithm. 
+
+Without scheduler the easiest way to schedule a POD is to simply set the node name field to name of the node in yoru pod speecification file .
+k8s won't allow you to modify the node name property of the pod (pod already running but no node) 
+
+You can create a binding object and do a post request to a running pod. (convert the binding object yaml to JSON format) 
+if no scheduler is there, pod will be in pending state always. 
+
