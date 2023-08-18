@@ -164,7 +164,7 @@ balance the load across multiple pods on mulitple nodes.
 selector is differece between replication controller (old tech but still selector field is there) and replica set.
 The deployment automatically creates a ReplicaSet, replicaset ultimately creates the pods. 
 deployment uses for usecases, rolling updates, pause upgrade and start. 
-============================
+=============================================================================================
 Services: 
 
 Service listens to a port on the node and forwards requests to the pods. 
@@ -181,6 +181,25 @@ it uses random algarithm to balance the load. thus service acts built in load ba
 k8s automatically creates a service that spans across all the nodes in the cluster and maps the targetPort to the same nodePort on all the nodes in the cluster. 
 we can use any node in the cluster to launch 
 when pods are removed or added, the service is automatically updated, making it highly flexible and adaptive.
+
+Each service gets an IP and name assigned to it inside the cluster, and that is the name that should be used by other pods to access the service, this type of service 
+is known as Cluster IP. 
+
+Nodeport scenario: 
+Even if your pods are only hosted on two of the nodes, they will still be accessible on the IPs of all the nodes in the cluster. 
+
+================================================================================================================================================
+
+LOAD BALANCER: 
+
+Load balancer scenario: how to give single URL instead of multiple node and nodeport URL like nodeport service?
+
+Oneway to achieve this is, to create a new VM for load balancer purpose. 
+install and configure suitable load balancer on it like HA proxy/nginx 
+then configure the load balancer to route traffic to underlying nodes. 
+
+k8s has support for integrating with the native load balancers of certain cloud providers in configuring this LB for us. 
+so all you need to do it set the service type as LoadBalancer. 
 
 
 
