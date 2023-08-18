@@ -201,6 +201,53 @@ then configure the load balancer to route traffic to underlying nodes.
 k8s has support for integrating with the native load balancers of certain cloud providers in configuring this LB for us. 
 so all you need to do it set the service type as LoadBalancer. 
 
+============================
+
+namespaces: 
+
+for internal purpose, such as networking solution, the DNS service, k8s creates these under kube-system namespace. (created at cluster startup) 
+resources that should be made available to all users are created --> kube-public. 
+dev, prod, default namespaces, each of these namespaces can have its own set of policies to define who can do what.
+u can also assign quota of resources to each of these namespaces. this way each namespace is guranteed a certain amount and does not use more than its allowed limit. 
+
+within namepsace, resource can refer to each other with just first name, no need to use full name. 
+if required webapp pod can reach service in another namespace as well.
+for this you must append the name of the namepsace to the name of the service.
+when a service is created a DNS entry is added automatically in this format. (db-service.dev.svc.cluster.local)
+
+cluster.local -> default domain name of the k8s cluster.
+svc -> sub domain for the service. 
+dev --> namespace. 
+db-service -> service name. 
+
+to limit resources in a namespace, create a resource quota. 
+
+============================================================================================================
+
+Imperatvie & Declarative
+
+imperative appraoch -> step by step approach. 
+
+declartive approach -> we just specify the final destination, we don't tell step by step instructions. declarting final destination. 
+system figures out the right path to reach the destination. Specifying what to do, not how to do. 
+
+Imperative approach; these commands run once and forgotten. 
+they are only available in session history of the user who ran these commands.
+so its hard for another person to figure out how these objects were created. 
+
+declarative apporach -> exacctly what we need to have, need to define in the yaml format. 
+create, replace, commands with kubectl --> imperative apporach.  object should already exist if we use these commands otherwise error will be thrown. 
+
+when you use edit command it changes are applied to objects, but that does not tracked in source code repository. 
+kubectl edit -> modifying the live object, changes are not recorded anywhere. this will open up a manifest file in the kubernetes memory. 
+
+Declartive: 
+we use apply command instead of create, replace. 
+apply command intelligent enough to create the object if it doesnot already exist. 
+complext scenario -> multi container pod -> object config created and use apply command. 
+
+
+
 
 
 
