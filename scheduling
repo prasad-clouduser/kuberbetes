@@ -9,7 +9,7 @@ k8s won't allow you to modify the node name property of the pod (pod already run
 You can create a binding object and do a post request to a running pod. (convert the binding object yaml to JSON format) 
 if no scheduler is there, pod will be in pending state always. 
 
-=================
+===================================================================================================
 
 labels & selectors: 
 
@@ -20,3 +20,22 @@ on creation if labels match the replica set is created successfully.
 annotations are used to record other details for informatory purposes. 
 like tool details like name, version, build information etc or contact details or phonenumbers, email IDs etc. 
 that may be used for some kind of integration purposes. 
+
+====================================================================================================
+
+TAINTS and Tolerations: 
+consider Node A is tainted: 
+
+1. by default PODs have no tolerations. 
+2. Non of the pod can tolerate any taint. 
+3. We would like to allow only pod D to be on Node A, so we add a toleration to POD D. \
+4. when scheduler tries to place the pods on Node A, it goes thorough. Node A accepts the pods that tolerate the taint Blue. 
+
+taint-effect: what would happen to the POD if they don't tolerate the taint. 
+taint and tolerations are meant accept pods with tolerations only, the pod can be placed on other nodes as well as there is no taint for other nodes. 
+
+when k8s cluster is first setup a taint is set on the master node automatically that prevents any pods from being scheduled on this node. that is why scheduler never
+schedule pods on the master node. 
+
+==========================================================================================================
+
