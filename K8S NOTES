@@ -247,6 +247,18 @@ apply command intelligent enough to create the object if it doesnot already exis
 complext scenario -> multi container pod -> object config created and use apply command. 
 
 
+===================================================================================================
+
+APPLY: 
+
+When you create an object with apply command, it does bit more, first traslates the yaml to json format 
+And then it is stored as the last applied configuration. 
+Object also created and live object configuration is also created. 
+
+Going forward for any update to the object, all 3 (Localfile, Last applied config, Live object config) are compared to identify what changes are to be made on the live object. 
+
+kubectl create or replace command don't store the last applied config like this. (as annotations)
+last applied confi is used to check if the fields can be deleted. 
 
 
 
