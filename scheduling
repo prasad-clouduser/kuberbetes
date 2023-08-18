@@ -37,5 +37,14 @@ taint and tolerations are meant accept pods with tolerations only, the pod can b
 when k8s cluster is first setup a taint is set on the master node automatically that prevents any pods from being scheduled on this node. that is why scheduler never
 schedule pods on the master node. 
 
-==========================================================================================================
+==============================================================================================================
+
+Node Selectors: 
+
+if you want to place the POD on a specific node NODE A you can use node selector. suppose data processing POD on the larger node. scheduler based on the labels of node it decides to 
+schedule pod on the node. 
+
+===============================================================================================================
+
+
 
