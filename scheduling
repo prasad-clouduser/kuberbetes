@@ -9,3 +9,14 @@ k8s won't allow you to modify the node name property of the pod (pod already run
 You can create a binding object and do a post request to a running pod. (convert the binding object yaml to JSON format) 
 if no scheduler is there, pod will be in pending state always. 
 
+=================
+
+labels & selectors: 
+
+inorder to connect the replica set to the POD we configure the selector field under the replica set specification to match the labels defined on the POD. 
+Mention other labels also to make sure that right pods are discovered by the replica set. single label will do the job.
+on creation if labels match the replica set is created successfully. 
+
+annotations are used to record other details for informatory purposes. 
+like tool details like name, version, build information etc or contact details or phonenumbers, email IDs etc. 
+that may be used for some kind of integration purposes. 
