@@ -1,1 +1,30 @@
 
+We have two system A and B. 
+how does System A reach System B. 
+We connect them to a switch. 
+Switch creates a network containing the two systems. 
+
+To connect them to a switch we need an interface on each host. 
+to see the interfaces on host, we use ip link command. 
+we use here eth0 to connect to the switch. 
+
+once ip address assigned to system, computers can communicate with each other through the switch. 
+switch can only enable communication within network. 
+which means it can receive packets from a host on the network and deliver it to the other systems within same network. 
+
+A router helps connect two networks together. 
+router - think of it as another server with many network ports. 
+since it connects to the two separate networks, it gets two IPs assigned. router gets two IPs. in the first network and second network. 
+
+To confgure a gateway on system B (which is in network 1.0)  to reach the systems on network 2.0, use the ip route add command and specificy that you can reach the 
+2.0 network via thorough the door or gateway at 192.168.1.1 
+
+Suppose system need access to the internet. 
+
+1. You connect the router to the internet. (ip route add 172.217.194.0/24 via 192.168.2.1) 
+2. Then add a new route in yur routing table to route all traffic to the network 172.217.194 through your router. 
+
+
+ip route add default via 192.168.2.1
+This way any request to any network outside of your existing network goes to this particular router. (instead of creatign multiple routes for various network in route table)
+
