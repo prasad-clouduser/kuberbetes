@@ -48,6 +48,15 @@ to easily send msg to private network.
 ip addr command is to see the IP address assigned to those interfaces. 
 ip addr add command is to set IP addresses on the interfaces. 
 
+=====================
+
+How system know where the router is there on the network to send the packets through?
+The router is just another device on the network, there could be many other such devices. 
+thats where we configure the systems with a gateway or route. 
+if the network was a room, the gateway is a door to the outside world to the other networks or to the internet. 
+the systeems need to know where the door is to go through that. run the route cmd to see that. 
+
+
 
 
 
