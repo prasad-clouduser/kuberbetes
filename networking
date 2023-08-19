@@ -28,3 +28,26 @@ Suppose system need access to the internet.
 ip route add default via 192.168.2.1
 This way any request to any network outside of your existing network goes to this particular router. (instead of creatign multiple routes for various network in route table)
 
+All you need is a single routing table entry with the default gateway set to the router's IP address.
+instead of default you could also say 0.0.0.0 (any IP destination) 
+
+0.0.0.0 field in the gateway field indicatees that you don't need a gateway, for ex; to access any device in the 192.168.2.0 network it does not need a gateway because it is
+in its own network. 
+
+two routers present? 
+
+1. one router should be used to connect to the public networks. 
+2. one router is used for connecting to the internal private network. 
+Total two routes present. 
+
+In linux packets are not forwarded from one interface to the next.
+for example packets received on eth0 on host B are not forwared to elsewhere through eth1 
+this is this way for security reason for ex: if you had eth0 connected to your private network and eth1 to a public network, we don't want anyone from public network 
+to easily send msg to private network. 
+
+ip addr command is to see the IP address assigned to those interfaces. 
+ip addr add command is to set IP addresses on the interfaces. 
+
+
+
+
