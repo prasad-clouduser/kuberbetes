@@ -28,7 +28,7 @@ consider Node A is tainted:
 
 1. by default PODs have no tolerations. 
 2. Non of the pod can tolerate any taint. 
-3. We would like to allow only pod D to be on Node A, so we add a toleration to POD D. \
+3. We would like to allow only pod D to be on Node A, so we add a toleration to POD D. 
 4. when scheduler tries to place the pods on Node A, it goes thorough. Node A accepts the pods that tolerate the taint Blue. 
 
 taint-effect: what would happen to the POD if they don't tolerate the taint. 
@@ -51,6 +51,20 @@ what if someone changes the label on the node at future point in time? will the 
 
 type of the node affinity defines the behaviour of the scheduler with respect to node affinity and stages in the life cycle of the pod. 
 
-=========================================
+========================================================================================================================================
 
+If nodes have no suffient resources available, the scheduler avoids placing the pod on those nodes and instead places the pod on one where suffient resources are available. 
+so min amount of CPU and Memory requested by the container is resource request. when the scheduler tries to place pod on a node it uses these num to identify the node 
+which has suffient amount of resources available. 
 
+by default a container has no limit to the resources it can consume on a node. 
+However you can set a limit for the resource usage on these pods. 
+
+what happens if pod exceeds the limit of CPU mentioned in spec? in case of system throttles CPu so that it does not go beyond the specified limit. 
+a container can't use more cpu resources than its limit. 
+A container can use more memory than its limit. but throws OOM exception 
+
+Requests and No limits Scenrio: 
+
+1. any POD can consume as many cpu cycles as available. at any point of in time if POD 2 requires additional CPU cycles or whatever it has requested it will be guranteed its requested CPU cycle. 
+but memory case we can gurantee by killing the first pod. because memory can't be throttled
