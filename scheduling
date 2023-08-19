@@ -68,3 +68,18 @@ Requests and No limits Scenrio:
 
 1. any POD can consume as many cpu cycles as available. at any point of in time if POD 2 requires additional CPU cycles or whatever it has requested it will be guranteed its requested CPU cycle. 
 but memory case we can gurantee by killing the first pod. because memory can't be throttled
+
+=================================================
+Deamon Set: 
+
+for v1.12 - uses NodeAffinity and default scheduler to schedule pods on nodes. 
+on eacch pod set the node property to bypass the scheduler and get the pod scheduled on node directly. (default behaviour of daemon set till 1.12) 
+
+=====================================================
+Static pods: 
+PODs that are created by the kubelet on its own, without the intervention of the API server or rest of the k8s cluster components are known as static pods. 
+place the manifest files in /etc/kubernetes/manifests -> kubelet periadically reads from here. 
+kubectl works at the pod level, other components can not be created. 
+
+static pod -> this is how kubeadmin tool setup the cluster. all control plan components can be deplyed as static pods. 
+
