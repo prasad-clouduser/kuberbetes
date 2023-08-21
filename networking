@@ -69,6 +69,6 @@ you add an entry init specifying address of the DNS server.
 
 top level domain --> they represent the intent of the website. --> .com 
 
-
+.com queries google and then google quieries www. 
 
 
