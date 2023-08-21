@@ -112,7 +112,6 @@ namespaces which can ping each other)
 we can add a route entry in the blue namespace to say route all traffic to the 192.168.1 network through the gateway at 192.168.15.5 (v-net-0 ip address) 
 because blue namespace can only reach the gateway in its local network at 192.168.15.5, we can't use other interface ip (192.168.1.2) 
 
-
 user try to reach other Host, just NAT the IPs 192.168.15.5 (so that these will be replaced with its own ip addresses) so that other systems can respond back.
 for this we need NAT enable on our host acting as gateway here so that it can send the msgs to the LAN in its own name with its own address.
 MASCURADE all packets coming from the source network withits own IP addresse) 
@@ -122,7 +121,18 @@ MASCURADE all packets coming from the source network withits own IP addresse)
 
 Dockerr Networking: 
 
-1. with the host network, the container is attached to the host network. There is no network isolation between the host and container.`11111
-2. 
+1. with the host network, the container is attached to the host network. There is no network isolation between the host and container.
+2. if you run web app that runs on port 80 on container, without using port mapping it runs the same port 80 on the host. 
+3. if you run same container again, it won't run as they use same host networking. 
+
+bridge: 
+an internal private network is created which the docker host and container attach to. 
+network has address 172.17.0.0 by default and each device connecting to this network get their own internal private network address on this network. 4
+
+after installing docker it creates network called bridge. 
+but it display as docker0 in the command ip link 
+port mapping creates the NAT rules for port mapping. to forward traffic from 8080 to container port 80
+here also two pairs of network interfaces are created
+docker0 is like switch and other interface on network namespace.
 
 
