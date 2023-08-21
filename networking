@@ -106,7 +106,7 @@ remember bridge switch is actually a just another network interface on the host,
 How to provide a gateway or door to the outside world from the namespace? Means how to ping other hosts (connected with LAN) from this host namespaces?
 
 A door or gateway is a system on the local network that connects to the other network
-so what is a system that has one interface on the network local to the blue namespace. 
+so what is a system that has one interface on the network local to the blue namespace which 192.168.15 network and is also connected to the outside LAN network.  
 our local host is the gateway that connects the two networks together ( namespaces network 192.168.15.0, we assigned IP address to v-net-0 interface which is like switch for 
 namespaces which can ping each other) 
 we can add a route entry in the blue namespace to say route all traffic to the 192.168.1 network through the gateway at 192.168.15.5 (v-net-0 ip address) 
@@ -118,5 +118,11 @@ for this we need NAT enable on our host acting as gateway here so that it can se
 MASCURADE all packets coming from the source network withits own IP addresse) 
 
 
+========================================================================================
+
+Dockerr Networking: 
+
+1. with the host network, the container is attached to the host network. There is no network isolation between the host and container.`11111
+2. 
 
 
