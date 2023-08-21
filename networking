@@ -40,6 +40,8 @@ two routers present?
 2. one router is used for connecting to the internal private network. 
 Total two routes present. 
 
+how to setup a linux host as a router? 
+
 In linux packets are not forwarded from one interface to the next.
 for example packets received on eth0 on host B are not forwared to elsewhere through eth1 
 this is this way for security reason for ex: if you had eth0 connected to your private network and eth1 to a public network, we don't want anyone from public network 
