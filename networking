@@ -175,12 +175,11 @@ there is also the another layer of networking that crucial for cluster functinal
 k8s laid out requirements for pod networking. 
 we know how to create cable and attach one interface to namespace and another to bridge interface. 
 
-
 The kubelet on each node is responsible for creating containers whenever a container is created. 
 the kubelet looks at CNI configuration passed as command line argument when it was run and identifies our scripts name
 it then looks in the CNI's bin directory to find our script and then executes the script with the add command and name and namespace id of the container. 
 
-==============
+===============================================================================================
 
 CNI in k8s: 
 
@@ -191,6 +190,36 @@ after the container is created.
 The CNI bin directory has all the supported CNI plugins as executables. such as bridge, dhcp, flannel etc.
 config directory -> where kubelet looks to find out which plugin needs to be used. 
 in this case it finds the bridge confi file. if multiple files are there, it will choose the one in alphabtical order. 
+
+=================================================================================================
+
+CNI Weave: 
+
+when a packet is sent from one pod to another pod , it goes out to the network, to the router and finds its way to the node that hosts the pod. 
+This will be a complex process if we have many nodes and many pods in a big cluster. routing table not enough (office can't keep track all routes) 
+
+where weave CNI plugin is deployed on a cluster, it deploys an agent or service on each node. 
+tbey communicate with each other to exchange info regarding the nodes and networks and pods within them. 
+each peer or agent stores topology of entire setup that way they know the pods and their IPs on the other nodes. 
+weave creates its own bridge on the nodes and names it WEAVE then assign IP address to each network. 
+
+single pod can attach multiple bridge networks. 
+you could have pod attached to the weave bridge as well as the docker bridge created by docker
+what path a packet takes to reach destination depends on the route configured on the container. 
+
+weave make sure that pods gets correct route configured to reach the agent. 
+and the agent then takes care of other pods. 
+
+When a packet is sent from one pod to another on another node. 
+weave intercept the packet and identifies that its on a separate network. 
+it then escapsulates this packet into a new one with new source and destination and sends it across the network. 
+
+once on the other side the other weave agent retrieve the packet and decasulates it and routes the packet to right pod. 
+
+===============================================================================================================================================
+
+
+
 
 
 
