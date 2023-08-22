@@ -117,9 +117,9 @@ for this we need NAT enable on our host acting as gateway here so that it can se
 MASCURADE all packets coming from the source network withits own IP addresse) 
 
 
-========================================================================================
+=======================================================================================================================
 
-Dockerr Networking: 
+Docker Networking: 
 
 1. with the host network, the container is attached to the host network. There is no network isolation between the host and container.
 2. if you run web app that runs on port 80 on container, without using port mapping it runs the same port 80 on the host. 
@@ -134,5 +134,31 @@ but it display as docker0 in the command ip link
 port mapping creates the NAT rules for port mapping. to forward traffic from 8080 to container port 80
 here also two pairs of network interfaces are created
 docker0 is like switch and other interface on network namespace.
+
+======================================================================================================================================
+
+CNI: 
+
+bridge program you create to attach the namespace to the network -> automated script.
+
+suppose you want to create it for other networking type automated script
+1. how do you make sure the program (like bridge) yu create will work correctly with these runtimes?
+2. how do we know that container runtimes like k8s or rocket will invoke your program correctly?
+3. thats where we need some standards defined. 
+4. A standard that define how a program should look. How container runtime should invoke them so that everyone can adhere to a single set of standards. 
+and develp solution that work across runtimes. thats where container network interface comes in. 
+
+CNI is set of standards that define how a program should be developed to solve networking challenges in a contaienrr runtime environments. 
+
+CNI defines some responsibilites to Containers Runtimes and Plugins. (check the list) 
+As long as container runtimes and plugins adhere to these standards. they can all live together in harmony. 
+
+Docker does not support CNI, however we can use these all plugins with some workaround. 
+it supports CNM. another standard. 
+
+How doccker creates?
+1. when k8s creates docker containers, it creates them on NONE network. 
+2. it then invokes the configured CNI Plugins who takes care of the rest of the configuration. 
+
 
 
