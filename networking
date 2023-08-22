@@ -231,6 +231,65 @@ which is milion ips.
 from this range, the peers decides to split the IP addresses equally between them and assigns one portion to each node. 
 Pods created on these nodes wil have IPs in this range. 
 
+=========================================================================================================================================
+
+Service Networking: 
+
+in previous lectures we talked about pod networking, how  bridge network are created within each node and how a pod get a namespace created for them. and how interfaces
+are attached to those namespaces. and how pods gets an ip address assigned to them within the subnet assigned for that node. 
+
+if you want to access services hosted on another pod, you would always use a service. 
+
+when a service is created, it is accessible from all pods on the cluster irrespective of what nodes the pods are on. 
+while pod is hosted on a node, a service is hosted across the cluster. it is not bound to specific node. 
+
+kubelet creates PODs on the nodes, it then invokes the CNI Plugin to configure networking for that pod. 
+similarly each nodes run another component kube-proxy, which watches the changes in the cluster through kube api server. 
+and everytime a new service is to be created, kube-proxy gets into action. 
+
+service is just an virtual object, but how do these get IP addresses?
+when service object created, it is assigned an Ip address from a predefined range. 
+The kube-proxy components running on each node gets that IP address and creates forwarding rules on each node in the cluster. any traffic coming to this IP of the service, 
+should go to the IP of the POD. 
+whenever services are created or deleted, the kube-proxy component creates or deletes these rules 
+
+how rules are created: 
+3 ways; 
+userspace: where kube-proxy listens on a port for each service and proxy's connections to the pods 
+by creating IPVS rules 
+ip tables.
+
+services ip address range specified in the kube api server's option called --service-cluster-ip-range. (default 10.0.0.0/24)
+when setup pod networking, I provided a pod network CIDR range of 10.244.0.0/16
+these should not overlap.
+
+=====================================================================================================================================
+
+Cluster DNS: 
+
+K8s deploys a built-in DNS server by default when you setup a cluster.
+if you setup k8s manually then you do it by yourself. 
+
+whenever a service is created, the kubernetes DNS service creates a record for the service. 
+it maps the service name to the Ip address. 
+
+if test pod, web pod, web pod service are in the same namespace, from test pod we can simply refer as http://web-service 
+but if test pod in one namespace and web pod and web pod service in another namespace apps, to refer service from test pod, you would have to say 
+http://web-service.apps
+for each namespace the DNS server creates Sub domain. 
+All services are grouped to gether into another sub domain called SVC. 
+
+All pods and services in a namespace are thus grouped together within a subdomain in the name of the namespace.
+All services are further grouped together into another sub domain called SVC. 
+so you can reach your application with the name webservice.apps.svc 
+finally all pods and service are grouped together into a root domain for the cluster which is set to cluster.local by default.
+
+
+
+
+
+
+
 
 
 
