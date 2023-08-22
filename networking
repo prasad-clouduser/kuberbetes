@@ -218,6 +218,19 @@ once on the other side the other weave agent retrieve the packet and decasulates
 
 ===============================================================================================================================================
 
+IP Address Management - Weave: 
+
+CNI says it is the responsibility of the CNI plugin the network solution provider to take care of assigning IPs to the containers. 
+previously we used a script (basic plugin ) we built earlier which took care of assigning IP addresses within this plugin.
+How do we manage this ips to make sure duplicate IPs are not assigned to pods. 
+instead of coding by ourslf in script, CNI comes with two built in plugin-ins to which you can outsource this task to. 
+in our case the plugin in that implemented the approach that we followed for managing the IP address locally on each host is the host local plugin. 
+
+Weave gives range 10.32.0.0/12 for entire network.
+which is milion ips. 
+from this range, the peers decides to split the IP addresses equally between them and assigns one portion to each node. 
+Pods created on these nodes wil have IPs in this range. 
+
 
 
 
