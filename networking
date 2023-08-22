@@ -73,7 +73,7 @@ top level domain --> they represent the intent of the website. --> .com
 
 .com queries google and then google quieries www. 
 
-=============================
+=============================================================
 NETWORK Namspaces: 
 
 Network namespaces are used by containers like docker to implement network isolation. 
@@ -159,6 +159,42 @@ it supports CNM. another standard.
 How doccker creates?
 1. when k8s creates docker containers, it creates them on NONE network. 
 2. it then invokes the configured CNI Plugins who takes care of the rest of the configuration. 
+
+==================================================================================
+
+Cluster Networking: 
+
+networking confi required on the master and worker nodes in k8s cluster. 
+check the ports for the control plan components. 
+
+==========================================================================================
+
+Talked about network that connects nodes together. 
+there is also the another layer of networking that crucial for cluster functinaling that networking at pod layer. 
+
+k8s laid out requirements for pod networking. 
+we know how to create cable and attach one interface to namespace and another to bridge interface. 
+
+
+The kubelet on each node is responsible for creating containers whenever a container is created. 
+the kubelet looks at CNI configuration passed as command line argument when it was run and identifies our scripts name
+it then looks in the CNI's bin directory to find our script and then executes the script with the add command and name and namespace id of the container. 
+
+==============
+
+CNI in k8s: 
+
+1. where do we specify the CNI plugins for k8s to use? 
+The CNI plugin must be invoked by the component within k8s that is responsible for creating containers because that component must then invoke the appropriate network plugin 
+after the container is created. 
+
+The CNI bin directory has all the supported CNI plugins as executables. such as bridge, dhcp, flannel etc.
+config directory -> where kubelet looks to find out which plugin needs to be used. 
+in this case it finds the bridge confi file. if multiple files are there, it will choose the one in alphabtical order. 
+
+
+
+
 
 
 
