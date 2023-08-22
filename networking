@@ -24,6 +24,7 @@ Suppose system need access to the internet.
 1. You connect the router to the internet. (ip route add 172.217.194.0/24 via 192.168.2.1) 
 2. Then add a new route in yur routing table to route all traffic to the network 172.217.194 through your router. 
 
+================================================================================================================================
 
 ip route add default via 192.168.2.1
 This way any request to any network outside of your existing network goes to this particular router. (instead of creatign multiple routes for various network in route table)
@@ -286,7 +287,26 @@ finally all pods and service are grouped together into a root domain for the clu
 
 
 
+================================
 
+POD DNS: 
+instead of adding the entries into each other /etc/hosts file. 
+we move the pod host and ip into a central DNS server 
+we then point these pods to the DNS server by adding an entry into their /etc/resolv.conf, specifying that the nameserver is at the ip address of the DNS server. 
+
+with k8s 1.12 the recommneded DNS server is coreDNS. 
+kubernetes deploys two pods for coreDNS in replica set in deployment.
+it reads a conf file Corefile. 
+in this file, the plugin that makes coreDNS work with kubernetes is the kubernetes plugin and that is where the top level domain of the cluster is set, cluster.local
+so every record in the coreDNS server falls under this domain. 
+
+any record that DNS server can't solve, for if pod tries to reach out to www.google.com
+it is forwarded to the nameserver specified in the coreDNS pods /etc/resolv.conf  
+the /etc/resolv.conf file is set to use the nameserver from the k8s node.
+
+coreDNS pod have the service named kube-dns by default. 
+ip address of this service is configured as name server on pods. 
+on this pod /etc/resolv.conf also have the search entry 
 
 
 
