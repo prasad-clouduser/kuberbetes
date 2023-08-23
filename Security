@@ -1,1 +1,104 @@
+Authentication: 
+
+Pass the auth csv file to kube api server. 
+there is an option available. 
+while authenticating kube-api-server pass the user/password. 
+
+=================================================================
+
+TLS certificates ensures --> communication between user and the server is encrypted and the server is who it says it is. 
+encrypt data being transferred using encryption keys --> encrypted using a key which is basically a set of random numbers and alphabets. 
+
+symmetric encryption --> same key to encrypt and decrypt the data. --> key has to be exchanged between sender and receiver. --> hacker can gain the key and decrypt the data (risk) 
+
+securely transfer the key to the server, so that client and server can safely communicate with each other using SYM encryption. 
+to securely the transfer the symmetric key from client to the server we use asymmetric encryption. With SYM encryption we have secured all future communication between them.
+
+
+Process: 
+1) when user first accesses the webserver using HTTPs. he gets public key from server 
+2) let us assume he too gets the copy of public key. 
+3) user browser encrypt the symmetric key using the public key provided by the server. SYM key now secure 
+4) then user send this(SYM key with public key) to server. hacker also gets a copy. 
+5) the server uses the private key to decrypt the message and retrieve the symmetric key from it. (hacker does not private key to decrypt and retrieve symmetric key) 
+6) symmetric key is now safely available to user and server. 
+7) they can use the SYM key to encrypt the data and send to each other. 
+8) the receiver can use the same symmetric key to decrypt the data and retrieve the information. (hacker is left with the encrypted messages and public keys with which he can't decrypt any data) 
+
+The end user though only generates a single symmetric key, once he establishes the trust with the website, he uses his username and password to authenticate with the webserver. 
+
+
+Actual certificate -->  who the certificate is issued to 
+                                      the public key of that server. 
+                                      the location of that server. 				  
+
+the person or subject --> to whom the certificate is issued to --> if web server --> this should match the what user types in the URL on his browser. 
+subject alternative name --> if bank is known by any other names, if they would like user to access by any other name also, must mention here. 
+
+All of the web browsers are built in with a certificate validation mechanism.
+Wherein browsers check the certificate received from server and validates it to make sure it is legitimate 
+If it identity it to be a fake certificate 
+
+How do you get your certificates signed by someone with authority ? thats where Certificate authority or CAs comes in. 
+there are well known org that can sign and validate your certificates for you. 
+(popular one Global sign, global sign, digicert, symmantic) 
+
+The way it works: 
+
+1) you generate a certificate signing a request (CSR) using a key you generated earlier and the domain name of your website. 
+  openssl req -new -key my-bank.key -out my-bank.csr -subj "/C=US/ST=CA/O=MyOrg, Inc./CN=my-bank.com"
+  that should be sent to CA for signing. 
+  Certificate authority verify the details, they sign the certificate and send it back to you. 
+  now you have certificate signed by a CA that the browsers trust. hacker fail during certificate validation phase and rejected by CA. 
+  
+how browser know symantic is valid CA and that the certificate was in fact signed by symantic ?
+
+CA themself have set of public and private key pairs. 
+The CAs use their private key to sign the certificate 
+the public keys of all the CAs are built in to the browsers.
+the browser uses the public key of the CA to validate that the certificate was actually signed by the CA themselves. 
+
+1) A server must request a certificate from the client. 
+2) and so a client must generate a pair of keys and a signed certificate from a valid CA. 
+3) The client then send the certificate to the server for it to verify that client is who they say they are. 
+
+public key: 
+usually certificate with public key are named crt or pem extension.
+
+private key: 
+*.key *-key.pem 
+remember private keys have word "key" in them. either extension or in the name of certificate 
+
+
+
+1) browser reads the certificate and uses the CAs public key to validate and retrieve the server's public key 
+2) it then generates a SYM key that it wishes to use going forward for all communication. 
+3) the SYM key is encrypted using the server's public key and sent back to server. 
+4) the server uses its private key to decrypt the message and retrieve the SYM key. 
+5) the SYM key is used for communication going forward. 
+
+
+Server certificates --> Certificate (Public Key)  and Private key --> so far we have seen how server uses public and private keys to secure connectivity
+CA has its own set of public and private key pairs that it uses to sign server certificates we will call them root certificates. 
+We also saw how a server can request a client to verify themselves using client certificates 
+
+3 types: 
+Server certificates configured on the servers. 
+root certificates configured on the CA servers. 
+And then client certificates configured on the clients. 
+
+Certificate signing request is like a certificate with all of your details, but with no signature. 
+The name of the component the certificate is for in the commonName or CN field. 
+
+csr cert should be signed by specifying the CA cert and CA key. --> that makes this a valid certificate within your cluster. 
+
+Certificate is like a validated User ID and the key is like the password. 
+
+We mentioned that for clients to validate the certificates sent by the server and vice versa, they all need a copy of the certificate 
+Authority public certificate (The one that we said is already installed within the user's browsers in case of web application) 
+server to validate the certificates sent by the client. 
+
+===================================================================================================================================================
+
+
 
