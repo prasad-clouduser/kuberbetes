@@ -308,8 +308,21 @@ coreDNS pod have the service named kube-dns by default.
 ip address of this service is configured as name server on pods. 
 on this pod /etc/resolv.conf also have the search entry 
 
+==============================================================================
 
+ingress: 
 
+You bring in another layer proxy server that proxies the rquests on 80 to 38080 on your nodes. 
+Point the DNS to this proxy server, user can visit the site by http://my-online-store.com
+
+we need a service to expose the igress controller to the xternal world. selector shuld point to ngix controller. 
+You could get different domain names to reach ur cluster by adding multiple DNS entries all pointing to same ingress controller service on kubernetes cluster.
+
+as mentioned before, ingress controller have additinal intelligence to built into them to monitor the k8s cluster for ingress resources and configure the underlying 
+nginx server when something is changed. but for ingress controller to do this it requires a service account with right set of permissions. 
+
+you must also passin two env variables that carries the pod name and pod namespace it is deployed to.
+nginx service requires these to read the configuration data from within the POD. 
 
 
 
