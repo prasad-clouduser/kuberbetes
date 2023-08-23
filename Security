@@ -92,13 +92,26 @@ The name of the component the certificate is for in the commonName or CN field.
 
 csr cert should be signed by specifying the CA cert and CA key. --> that makes this a valid certificate within your cluster. 
 
-Certificate is like a validated User ID and the key is like the password. 
+Certificate is like a validated User ID and the key is like the password. but much more secure than the simple user name and password. 
+so this is for admin user, How do you differentiate this user from any other users? 
+the user account needs to be identified as an admin user and not just another basic user.
+you do that by adding the group details for the user in the certificate. 
+
+
 
 We mentioned that for clients to validate the certificates sent by the server and vice versa, they all need a copy of the certificate 
 Authority public certificate (The one that we said is already installed within the user's browsers in case of web application) 
 server to validate the certificates sent by the client. 
 
 ===================================================================================================================================================
+
+K8S cluster can have more than one CA server to sign CSR. one for all, one for just ETCD
+This CA also has its own certificates. 
+
+kubectl client certi to authenticate to kube api server: 
+1. API server needs to know which node is authenticating and give it right set of permissions. so it requires nodes to have the right names in the right formats. 
+since nodes are system components like the kube-scheduler, the format starts with system keyword. 
+how would the API server gives it the right set of permissions. similary nodes must be added to a group named System Nodes. 
 
 
 
