@@ -58,7 +58,12 @@ The CAs use their private key to sign the certificate
 the public keys of all the CAs are built in to the browsers.
 the browser uses the public key of the CA to validate that the certificate was actually signed by the CA themselves. 
 
-1) A server must request a certificate from the client. 
+so the administrators generates the keypair for securing SSH. 
+The web server generates a key pair for securing the website with HTTPs. 
+The end user though geenerates a single symmetric key 
+once he establishes trust with the website, he uses his username and password to authenticate to the webserver 
+
+1) as part of initial trust building exercise, A server can request a certificate from the client. 
 2) and so a client must generate a pair of keys and a signed certificate from a valid CA. 
 3) The client then send the certificate to the server for it to verify that client is who they say they are. 
 
@@ -131,4 +136,5 @@ who does all of this for us ? ( like review and approve, generate cert )
 controller manager is responsible for all the certificates related operations.
 All cert related operations are carried out by controller manager. 
 
+===================
 
