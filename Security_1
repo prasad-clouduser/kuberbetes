@@ -16,6 +16,7 @@ Kubernetes API:
 
 These APIs are responsible for cluster's functionality. 
 
+There are many like below groups /metrics, /healthz 
 /api -> core grup --> all core functionality 
 /apis --> named group, more organized one. All newer features are made available through these named groups. 
 all newer features are going to be made available through this new group. 
@@ -26,3 +27,32 @@ that way you dont have specify those in curl command.
 
 named apis --> it has API groups --> api groups have resources. 
 each resource has actions assoicated with them.
+
+========================================================================================================================
+
+Authorization: 
+
+kubelet access the API server to read info about services and endpoints node and pods 
+the kubelet also reports to the kube api server with the info about the node such as its status 
+these rquests are handled by special authorizer called node authorizer 
+
+kubelets should be part of systems nodes group and have name prefixed with system:node. 
+so any request coming from a user with the name system node and part of the system nodes group is authorized by the node authorizer and granted these privileges
+
+ABAC --> we create policy for each user, difficult to manage. every time we need to edit and restart kube api server. 
+RBAC -> role is created -> simply modify the role, it reflects on all developers immediately. 
+
+webhook --> manage authorization externally. not thorugh the build in mechanisms 
+ex: OPA is third party tool that helps with adminision control and authorization. u can have k8s make an API call to the open policy agent with the information about the user and his access rquirements. 
+OPA decides if the user should be permitted orn ot. 
+Always allow and Alway deny are two more modes allowed. 
+
+suppose;
+authorization mode--> node, RBAC, WEBHOOK. 
+when a user sends a request its first handled by node authorizer. the node authroizer handles only node requests. it denies the request. 
+then it is forward to next one in the chain. it performs checks and grants the permissions. 
+
+everytime a module denies request it goes to next module. 
+
+
+
