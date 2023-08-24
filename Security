@@ -70,7 +70,6 @@ private key:
 remember private keys have word "key" in them. either extension or in the name of certificate 
 
 
-
 1) browser reads the certificate and uses the CAs public key to validate and retrieve the server's public key 
 2) it then generates a SYM key that it wishes to use going forward for all communication. 
 3) the SYM key is encrypted using the server's public key and sent back to server. 
@@ -97,8 +96,6 @@ so this is for admin user, How do you differentiate this user from any other use
 the user account needs to be identified as an admin user and not just another basic user.
 you do that by adding the group details for the user in the certificate. 
 
-
-
 We mentioned that for clients to validate the certificates sent by the server and vice versa, they all need a copy of the certificate 
 Authority public certificate (The one that we said is already installed within the user's browsers in case of web application) 
 server to validate the certificates sent by the client. 
@@ -113,5 +110,25 @@ kubectl client certi to authenticate to kube api server:
 since nodes are system components like the kube-scheduler, the format starts with system keyword. 
 how would the API server gives it the right set of permissions. similary nodes must be added to a group named System Nodes. 
 
+================================================================================================================================================
+
+kubeadm setup: 
+
+cmd used to start the API server has information about all the certificates it uses. 
+Issuer: in certificate -> kubeadm names the kubernetes CA as kubernetes itself. 
+
+you can look at the container logs for addtional for any issues 
+
+==================================================================
+whenever new user available, he creates the key and cert, we need to get this cert signed by CA. admin has access to ca certs so he get those certs signed. 
+instead of manually signing certificates: with admin usre
+You need a better automated way to manage the certificates, sigining requests and aswell as rotate certificates when they expire. 
+k8s has built in certificate API that can do this for you. 
+with certificate API you now send a cert signigng request directly to k8s through an API cal. 
+this time when the administrator receives a cert signing request, instead of logging onto master node and signing the cert by himself, he creates an K8s API object,,, called certi signing request. 
+
+who does all of this for us ? ( like review and approve, generate cert ) 
+controller manager is responsible for all the certificates related operations.
+All cert related operations are carried out by controller manager. 
 
 
