@@ -54,5 +54,11 @@ then it is forward to next one in the chain. it performs checks and grants the p
 
 everytime a module denies request it goes to next module. 
 
+===================================================
+
+ClusterRoles:
+
+resources are categorized as namespaced or cluster scoped. 
+you can create a cluster role for namespaced resources as well. user will have access to these resources across all namespaces. 
 
 
