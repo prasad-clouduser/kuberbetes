@@ -1,1 +1,28 @@
+Security: kubeconfig 
+we can also pass the client certs to the kubectl utility. 
+instead of cmd keep them in the config file.
 
+KubeConfig: 
+
+1. contexts marry these together (clusters and users) 
+We are not configuring any kind of user access or authorization in the cluster with this process. 
+you are using existing users with their existing privileges and defining what user you are going to use to access what cluster. 
+
+that way you don't have to specify the user certificates and server address in each and every kubectl command you run. 
+
+====================================================================
+
+Kubernetes API: 
+
+These APIs are responsible for cluster's functionality. 
+
+/api -> core grup --> all core functionality 
+/apis --> named group, more organized one. All newer features are made available through these named groups. 
+all newer features are going to be made available through this new group. 
+
+Apart of curl to access kube api server, we can also use kubectl proxy client to access k8s api server. 
+it launches a proxy service locally on port 8001, and uses credentials and certificates from your kube config file to acecs the cluster. 
+that way you dont have specify those in curl command. 
+
+named apis --> it has API groups --> api groups have resources. 
+each resource has actions assoicated with them.
