@@ -54,11 +54,31 @@ then it is forward to next one in the chain. it performs checks and grants the p
 
 everytime a module denies request it goes to next module. 
 
-===================================================
+=====================================================================================================
 
 ClusterRoles:
 
 resources are categorized as namespaced or cluster scoped. 
 you can create a cluster role for namespaced resources as well. user will have access to these resources across all namespaces. 
+
+======================================================================================================
+
+Service Accounts: 
+
+The service account token is what must be used by the external application while authenticating to the k8s api.
+the token however is stored as secret object. 
+
+1. when sa is created, it first creates the service account object. 
+2. then generates the token for the service account. 
+3. it then creates a token object and stores that token inside the secret object. 
+4. then secret object is linked to service account. 
+
+this token can then be used as an authentication bearer token while making a REST call to the k8s API. 
+
+if third party app hosted in k8s itself. 
+1. exporting the service account token and configuring the third party application to use it can be made simple by automatically mounting the service token secret as a volume 
+inside the pod hosting third party app. 
+whenever a pod is created, the default service account and its token are automatically mounted to that pod. 
+u may choose not to mount a service account automatically by setting automountServiceAccountToken field. 
 
 
