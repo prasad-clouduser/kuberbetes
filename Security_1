@@ -99,4 +99,35 @@ how do you pass the credentials to the docker runtimes on the worker nodes?
 docker-registry is a built in secret type that was built for storing docker credentials. 
 keep this in imageSecrets in pod def file, kubelet use this cred to pull the images from internal registry 
 
+==========================================================================================================================
+
+Security:
+--------
+
+containers and host share the same kernel. 
+host has namespace and container has its own namespace. 
+All the processes run by the containers are in fact run on the host itself but in their own namespace. 
+
+As far as docker container is concerned, it is in its own namespace and it can see its own processes only. it can't see anything outside of it or in any other namespace. 
+
+for the docker host, all processes of its own as well as those in the child namespaces are visible as just another process in the system.
+when you list the processes on the host, you see list of processes including the sleep command but with a different process ID. 
+This is because processes can have diff process IDs in diff namespaces. 
+This is process isolation. 
+
+Both within container and outside the container on the host, the process is run as root user. 
+docker implements a set of security features that limits the abilities of root user within the container. 
+root user within container is not really like the root user on the host 
+
+you can now control and limit what cap are made available to the user.
+by default, docker runs a container with a limited set of capabilities and so process running with in the container do have the privileges to say reboot the host 
+or perform operations that can disrupt the host or other containers running on the same host. 
+
+you can modify prvilges with -cap-add, -prvileges with docker run.
+
+diff capabilities of linux: 
+/usr/include/linux/capability.sh
+
+
+
 
