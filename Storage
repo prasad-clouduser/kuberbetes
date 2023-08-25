@@ -30,6 +30,40 @@ storage drivers are responsible for all of this operations (maintaing layer arch
 the selection storage driver depends on underlying OS being used. 
 for ex: ubunu uses AUFS, which currently unavailable on CENTOS where we need to use device mapper. 
 
+===========================================================================================================================================================================
+
+volumes are handled by volume driver plugins. 
+The default volume driver plugin is Local. 
+The local volume plugin helps create a volume on the docker host and store its data under the /var/lib/docker/volumes directory 
+Many volume driver plugin availbel that allow you to create a volume on third party solutions. 
+
+===========================================================================================================================================================================
+
+Container Storage Interface: 
+
+previoulsy docker alone used as the container runtime engine. and all the code that work with docker was embeded within k8s source code. 
+with other container runtimes coming in, such as Rocket or CRI-O it was imp to open up and extend support to work with diff container runtimes and not be dependent 
+on the k8s source code. 
+
+CRI is standard that defines how an orchestration solution like k8s would communicate with container runtime like docker. 
+any new container runtime would follow CRI standards, that new containre run times would work with k8s 
+
+CSI -> with CSI now you can write your own drivers for your own storage to work with k8s. not a k8s specific standard. 
+its meant to be universal standard. and if implemented allows any container archestration tool to work with any storage vendor with a supported plugin. 
+
+CSI kind of looks like below: 
+it defines a set of RPCs that will be called by container orchestrator and these must be implemented by storage driver. 
+
+for ex, csi says: when a pod is created and requires a volume, the container orchestrator, in this case k8s should call the create volume RPC and pass a set of details 
+such as volume name. The storage driver should implement this RPC and handle that request and provision a new volume on the storage array and return the results of operations. 
+same thing for delete volume. 
+
+
+
+
+
+
+
 
 
 
