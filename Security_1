@@ -134,6 +134,22 @@ security settings can be configured at the pod level or container level.
 if you configure at pod level the settings will carry over to containers also in the same pod. 
 if you conf at both pod and containerr level, the settings at container level override the pod security settings.
 
+=======================================================
+ntework policies: 
+
+one of the pre-requisites of networking in k8s is whatever solution you implement, the pods should be able to communicate with each other without having to configure 
+any additinal settings like routes. 
+k8s configured by default with an all allow rule that allows traffic from any pod to any other pod or services within the cluster. 
+
+network plicy type must be mentioned in the policies for it take effects. if only ingress is mentioned, egress is not blocked. 
+network policy only support few solutions only. if it does not support, it wiil not throw error, it will create though. 
+
+Ipblock selector is also available to allow frm outside k8s cluster. 
+
+
+
+
+
 
 
 
