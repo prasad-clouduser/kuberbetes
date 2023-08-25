@@ -59,11 +59,7 @@ such as volume name. The storage driver should implement this RPC and handle tha
 same thing for delete volume. 
 
 
-
-
-
-
-
+Storage Class -> you don't have to manually create a PV anymore. 
 
 
 
