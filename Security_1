@@ -128,6 +128,14 @@ you can modify prvilges with -cap-add, -prvileges with docker run.
 diff capabilities of linux: 
 /usr/include/linux/capability.sh
 
+============================================================================
+security settings (MACADMIN, USERID, list of capabilities) 
+security settings can be configured at the pod level or container level. 
+if you configure at pod level the settings will carry over to containers also in the same pod. 
+if you conf at both pod and containerr level, the settings at container level override the pod security settings.
+
+
+
 
 
 
