@@ -81,4 +81,22 @@ inside the pod hosting third party app.
 whenever a pod is created, the default service account and its token are automatically mounted to that pod. 
 u may choose not to mount a service account automatically by setting automountServiceAccountToken field. 
 
+======================================================================================================================
+
+Image Seccurity: 
+
+Library is the name of the default account where docker's official images are stored. 
+These images promote best practices and are maintained by a dedicated team who are responsible for reviewing and publishing these official images. 
+where these images are to be pulled from? 
+it is assumed to be docker's default registry, dockerhub. 
+The DNS name for which is docker.io. 
+
+google registry -> gcr.io 
+
+within k8s, we know that the images are pulled and run by the docker runtime on the worker nodes. 
+how do you pass the credentials to the docker runtimes on the worker nodes?
+
+docker-registry is a built in secret type that was built for storing docker credentials. 
+keep this in imageSecrets in pod def file, kubelet use this cred to pull the images from internal registry 
+
 
