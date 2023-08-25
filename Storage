@@ -60,6 +60,7 @@ same thing for delete volume.
 
 
 Storage Class -> you don't have to manually create a PV anymore. 
+you have volume plugins to support diff provisioners. 
 
 
 
