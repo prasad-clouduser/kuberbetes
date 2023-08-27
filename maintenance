@@ -56,7 +56,7 @@ upgrade them on masernode and nodes and check again.
 upgrade kubeadm and kubelet on the master node and nodes and restart the kubelet service, on nodes first you need to drain the node, reschedule pod on another nodes and start uprading kubeadm and kubelet. 
 
 
-=============================================
+===================================================================================================================================
 On master node: 
 
 upgrade the kubeadm
@@ -72,6 +72,15 @@ restart the kubelet process.
 uncordon the node. 
 
 follow the same for other nodes. 
+
+====================================================================================================================================
+backup & restore: 
+
+etcd stores info about state of our cluster. info about our cluster itself, the nodes and every other resources created within the cluster, are stored here. 
+when etcd restores from a backup, it initializes a new cluster configuration and configures the members of etcd as new members to a new cluster. 
+this is to prevent new member from accidentally joining an existing cluster. 
+
+
 
 
 
