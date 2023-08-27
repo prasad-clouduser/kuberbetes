@@ -56,6 +56,24 @@ upgrade them on masernode and nodes and check again.
 upgrade kubeadm and kubelet on the master node and nodes and restart the kubelet service, on nodes first you need to drain the node, reschedule pod on another nodes and start uprading kubeadm and kubelet. 
 
 
+=============================================
+On master node: 
+
+upgrade the kubeadm
+run the kubeadm upgrade plan 
+check the instruction and upgrade it. 
+
+for node upgrade. 
+
+upgrade the node using kubeadm
+later drain the node. (from control plan) 
+upgrade kubelet process on it. 
+restart the kubelet process. 
+uncordon the node. 
+
+follow the same for other nodes. 
+
+
 
 
 
