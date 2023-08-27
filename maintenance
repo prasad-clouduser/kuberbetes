@@ -53,6 +53,8 @@ nodes with newer software version can be added to the cluster, moe workload over
 
 kubectl get nodes give the output which display the version of kubelets on each of these nodes registered with API servers.
 upgrade them on masernode and nodes and check again. 
+upgrade kubeadm and kubelet on the master node and nodes and restart the kubelet service, on nodes first you need to drain the node, reschedule pod on another nodes and start uprading kubeadm and kubelet. 
+
 
 
 
