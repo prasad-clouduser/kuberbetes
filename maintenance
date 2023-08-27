@@ -22,6 +22,39 @@ you then need to uncordon it so that pods can be scheduled on it again. (only ne
 or you can simply cordon a node -> mark as unschedulable, does not happen anythign to exsting to pods, new pods are not scheduled on this node. 
 
 
+===================================================================================================================================================================
+k8s versoins: 
+
+All bug fixes and improvments first go into Alpha release. tagged as alpha. In this release the features are disabled by default and may be buggy. 
+then from there, they make their beta release where the code is well tested. the new features are enabled by default. 
+and finally they make their way to the main stable release. 
+
+==========================================================================================================================
+k8s api server is the main component, none of the other component should be at a version higher than the kube api server. 
+
+kube api server at 1.10
+kube controller manager & kube schedule at one version lower. 
+kubelet & kube-aproxy could be two version lower to api server. 
+kubectl could be one verson higher and one version lower. 
+
+k8s supports only two lower version only to current version. 
+ex: if you are at 1.13, it will support till 1.11
+
+if you are upgrading k8s, suppose upgrading master nodes, all components on it briefly go down. 
+can't interact with kubectl, workloads on nodes are not impacted. you can create new workloads also. 
+if pods were to fail, a new pod wont be created automatically. 
+as long as nodes and pods are up, app is up, your users won't be impacted. 
+
+3 strategies: 
+
+upgrade all nodes at a time. down time for application is expected. 
+upgrade one node a time and share the pods to other nodes. 
+nodes with newer software version can be added to the cluster, moe workload over to the new and decomission old node. 
+
+kubectl get nodes give the output which display the version of kubelets on each of these nodes registered with API servers.
+upgrade them on masernode and nodes and check again. 
+
+
 
 
 
