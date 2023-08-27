@@ -1,1 +1,29 @@
 
+If the node comeback online immediately, the kubelet process starts and pods comeback online. 
+however if the node node was down more than 5 min, pods are terminated from that node. 
+k8s considers them as DEAD. 
+if the pods were part of replica set, then they are recreted on other nodes. 
+The time it waits for a pod to comeback online is known as POD eviction timeout and is set on the controller manager with a default value of 5 min. 
+
+whenver node goes offline, the master node waits for 5 min before considering node as Dead. 
+
+if you know world load running on the node have other replicas. 
+if its okay that they go down for a short period of time.
+and if you are sure the node will come back within five minute. 
+you can make a quick upgrade and reboot. 
+
+other methods: 
+
+drain: 
+when you drain a node, the pods are grcefully terminated on the node from the node that they are on and recreated on another node. 
+the node is marked as cordoned or marked as unschedulable. no pods are scheduled on this node until you remove the restriction. 
+you then need to uncordon it so that pods can be scheduled on it again. (only new or deleted pods are rescheduled onthis, not moved pods before) 
+
+or you can simply cordon a node -> mark as unschedulable, does not happen anythign to exsting to pods, new pods are not scheduled on this node. 
+
+
+
+
+
+
+
