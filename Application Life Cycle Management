@@ -29,3 +29,7 @@ the command field corresponds entrypoint instructions.
 only specific fields can be edited with kubectl edit commands. like try to change sleep seconds command, it will create a file in /tmp directory 
 we can also pass --command --args to the kubecctl run command. 
 
+==================================================================================
+
+imperative way: without using a configMap definition file. 
+declarative way: using config map definition file.
