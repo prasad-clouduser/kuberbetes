@@ -59,4 +59,19 @@ If any of the initContainers fail to complete, Kubernetes restarts the Pod repea
 
 ====================================================
 
+Monitoring and Logging: 
+-----------------------
+
+Metric server retrieves the metrics from each of k8s nodes and pods, aggregates them and stores them in memory. 
+Metric server is only an in memory monitoring solution and does not store metrics on the disk 
+and as result you can't see historical performance data. 
+
+kubelet -> responsible for receiving instructions from the k8s api master server and running pods on node. 
+kubelet contains a subcomponent knwn as cAdvisor or Container Advisor 
+cAdvisor is responsible for retrieving performnace metrics from pods and exposing them through kubelet API to make the metrics available for the metric server. 
+
+
+
+
+
 
