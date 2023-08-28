@@ -10,7 +10,6 @@ Deployment strategy:
  2. rolling update --> default deploymnt strategy 
 
 you can also see the ddetails in deployment details events. 
-
 you can also use kubectl set image command to update the deploment but the manifest file have old details, be careful when you use this in future .
 
 how deployment upgrade under the hoods: 
@@ -21,5 +20,9 @@ how deployment upgrade under the hoods:
 5. kubectl get replicasets. 
 6. if any bad happens in our deployment, you can roll out to pervious state with undo command. 
 
+
+================================================================================================================================================
+Anything that is appended in the docker run command, will go into the args property.
+the command field corresponds entrypoint instructions. 
 
 
