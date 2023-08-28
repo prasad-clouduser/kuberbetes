@@ -40,3 +40,7 @@ you can view them from etcd database.
 you can enable the encryption at rest in etcd database. there is a document available steps mentioned to be done on control plan node. 
 
 =========================================================================================================================================================
+
+Multi container PODs. 
+
+Sometimes you may need two services to work togther. such as webserver and logging service. 
