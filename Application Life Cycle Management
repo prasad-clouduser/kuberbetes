@@ -33,3 +33,10 @@ we can also pass --command --args to the kubecctl run command.
 
 imperative way: without using a configMap definition file. 
 declarative way: using config map definition file.
+=========================================================================
+
+secrets are stored in etcd unencrypted. 
+you can view them from etcd database. 
+you can enable the encryption at rest in etcd database. there is a document available steps mentioned to be done on control plan node. 
+
+=========================================================================================================================================================
