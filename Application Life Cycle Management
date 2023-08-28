@@ -1,1 +1,25 @@
 
+when u first create a deployment, it triggers a rollout. 
+A new rollout creates a new deployment revision. it creates revision 1 
+
+in future if u upgrade application, a new rollout triggered and a new deployment revision is created. revision 2 
+which helps in rollback to previous state. 
+
+Deployment strategy: 
+'1. recreate strategy --> applicaation down until new version pods are up. 
+ 2. rolling update --> default deploymnt strategy 
+
+you can also see the ddetails in deployment details events. 
+
+you can also use kubectl set image command to update the deploment but the manifest file have old details, be careful when you use this in future .
+
+how deployment upgrade under the hoods: 
+1. create new deployment with five replica's 
+2. which can firts creates the replica set1 automatically. 
+3. it creates num of pods based on replica count. 
+4. when upgrade yur app, k8s deployment object creates new replica set under the hoood and start deployment of containers there, at the same time taking down pods in old replica set follwing rolling update strategy. 
+5. kubectl get replicasets. 
+6. if any bad happens in our deployment, you can roll out to pervious state with undo command. 
+
+
+
