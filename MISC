@@ -7,6 +7,31 @@ minikube -> relys on one of the virtualization software like oracle virtual box 
 
 ======================================================================================================
 
+kube api server can be run in active active mode. 
+If we have two API server on each master node,  you can have load balancer infront of master nodes that split traffic between API servers. 
+kubectl utility point to that load balancer. nginx or ha proxy or any other load balancer for this purpose. 
+
+scheduler and controller should run active and standby mode, otherwise results in more number of pods. 
+
+Controller manager: 
+when controller manager process is configured. you may specify the leader elect option which is by default set to true. 
+with this option when controller manager process starts it tries to gain or lease a lock on an endpoint object in k8s named as kube controller manager endpoint. 
+whichever process first updates the endpoint withits information gains the lease and becomes the active of two. 
+it holds the lock for lease duration specified using the leader elect lease duration option. 
+the active process renews the lease every 10 sec. 
+both theprocesses try to become leader every 2 sec, second process can acquire the lock and become the leader. 
+scheduler also same 
+
+if etcd on the control plan node, if control node crashes, etcd also goes down. if it is on separate cluster, it won't go down. 
+etcd; if any compoent want to reach, it can reach the etcd server at any of its instances. 
+u can read and write data thorugh any of the available etcd server instances. thats why we specify the list of etcd server in kubeapi server config.
+
+
+
+
+
+
+
 
 
 
