@@ -23,8 +23,29 @@ both theprocesses try to become leader every 2 sec, second process can acquire t
 scheduler also same 
 
 if etcd on the control plan node, if control node crashes, etcd also goes down. if it is on separate cluster, it won't go down. 
-etcd; if any compoent want to reach, it can reach the etcd server at any of its instances. 
+etcd; if any component want to reach, it can reach the etcd server at any of its instances. 
 u can read and write data thorugh any of the available etcd server instances. thats why we specify the list of etcd server in kubeapi server config.
+
+
+===========================================================================================================================================
+if multiple writes comes to write to etcd server. 
+
+only one of the instances is responsbile for processing the writes. 
+internally two nodes elects the leader among them.
+of the total instances one node becomes the leader. 
+
+if writes came in through any of the follower nodes, then they forward the writes to the leader internally and then the leader processes the writes. 
+when writes r processed the leader ensures that copies of writes are distributed to other instances in the cluster. 
+
+if one node is down among 3 nodes, write happesn the leader node, writes is said to be completed only when the write is copied to majority of the nodes. 
+Quorum is the minimum number of nodes that must be available for the cluster to function properly or make a successful write. 
+recommneded to have a min 3 instances in an etcd cluster. that way it offers falut tolerant of atleast one node. 
+
+Quorum is required to say cluster is alive. 
+
+fault tolerance: the number of nodes that you can afford to lose hwile keeping the cluster alive. 
+
+
 
 
 
