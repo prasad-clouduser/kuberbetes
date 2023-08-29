@@ -49,6 +49,17 @@ leader election is done by raft algathrim, it uses timer whicher completes first
 notifications from leader, they start its own timers to elect the leader. 
 
 
+========================================================================================================================================================================
+
+virtual box - this is our hypervisor this is ultimately responsible for running our virtual machines. 
+vagrant -> automatiion tool it really easy to spin up a whole bunch of VMs. 
+==========================================================================================================
+
+both kubelet and container runtime need to interface with these control groups to enfore various resource management for pods. 
+so think of things like setting the CPU and Memory requests and limits. These are all things that need to be kind of communicated to the c groups. 
+
+
+
 
 
 
