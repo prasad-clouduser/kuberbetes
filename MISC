@@ -45,8 +45,8 @@ Quorum is required to say cluster is alive.
 
 fault tolerance: the number of nodes that you can afford to lose hwile keeping the cluster alive. 
 
-
-
+leader election is done by raft algathrim, it uses timer whicher completes first will be considered as a leader by taking consent from other two. when other two stops reciving 
+notifications from leader, they start its own timers to elect the leader. 
 
 
 
