@@ -1,0 +1,14 @@
+
+On windows you must rely on virtualization software like Hyper-v or VMWare workstation or virtual box to create linux VMs on which you can run k8s. 
+There are other solutions also available to run k8s components as docker containers on windows VMs. Even then the docker images are linux based, and under the hoods they run on a small linux OS created by hyper-v 
+for running linux docker containers. 
+
+minikube -> relys on one of the virtualization software like oracle virtual box to create virtual machines that run the k8s cluster components. 
+
+======================================================================================================
+
+
+
+
+
+
