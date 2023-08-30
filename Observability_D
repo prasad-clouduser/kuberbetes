@@ -12,7 +12,14 @@ Pending
 ContainerCreating --> images are pulled. 
 Running 
 
-at times we need additional information, Conditions complement pod status.
+at times we need additional information, Conditions complement pod status. it is an array of true or false values that tell us state of the pod. 
+
+POD conditions: 
+PodScheduled. 
+Initialzed
+ContainersReady
+Ready
+
 The app takes sometime to warm up, but at that pod in ready state which is actually not true. 
 How does k8s knows whether the app running inside the container is actually running or not? 
 
