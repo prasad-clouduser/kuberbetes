@@ -1,0 +1,33 @@
+
+
+prerquisite of life cycle of pod: 
+
+when a pod is first created, it is in pending state. 
+This is when scheduler tries to figure out where to place the pod. 
+if scheduler can't find the node to place the pod on, it remains in a pending state. 
+
+At any point of in time, the pod status can only be one of these values : can only give high level summary of pod.
+
+Pending
+ContainerCreating --> images are pulled. 
+Running 
+
+at times we need additional information, Conditions complement pod status.
+The app takes sometime to warm up, but at that pod in ready state which is actually not true. 
+How does k8s knows whether the app running inside the container is actually running or not? 
+
+if the app within the container took longer time to get ready, the service is unaware of it and send traffic through as a container already in ready state. causing users to hit a pod that is not actually running 
+a live application.
+
+readiness probe: 
+k8s does not immediately set the ready condition on the container to true. 
+instead it performs test to see if the api responds positively. 
+untill then service does not send the traffic to the pod as it sees that the pod is not ready. 
+
+if you know that your application will take a min of say 10 sec to warm up. you can add aditional delay to the probe. Initial delay seconds. 
+
+
+
+
+
+
