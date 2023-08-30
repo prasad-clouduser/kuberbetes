@@ -26,6 +26,9 @@ How does k8s knows whether the app running inside the container is actually runn
 if the app within the container took longer time to get ready, the service is unaware of it and send traffic through as a container already in ready state. causing users to hit a pod that is not actually running 
 a live application.
 
+What we need here is a way to tie the ready condition to the actual state of the application inside the container. 
+
+
 readiness probe: 
 k8s does not immediately set the ready condition on the container to true. 
 instead it performs test to see if the api responds positively. 
@@ -33,6 +36,12 @@ untill then service does not send the traffic to the pod as it sees that the pod
 
 if you know that your application will take a min of say 10 sec to warm up. you can add aditional delay to the probe. Initial delay seconds. 
 
+=============================================================================================================================================================
+
+Liveness probe:
+due to bug in the code, the app is stuck in infiinite loop. as far as k8s concerned, the container is up so the app is assumed to be UP. 
+a liveness probe can be configured on the container to periadically test whether the app within container isactually healthy 
+if the test fail, the container is unhealthy and is destroyed and recreated. 
 
 
 
