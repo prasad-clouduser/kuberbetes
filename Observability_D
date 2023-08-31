@@ -43,6 +43,19 @@ due to bug in the code, the app is stuck in infiinite loop. as far as k8s concer
 a liveness probe can be configured on the container to periadically test whether the app within container isactually healthy 
 if the test fail, the container is unhealthy and is destroyed and recreated. 
 
+====================================================================================================================
+
+JOBS
+
+There are other workloads such as batch processing, analytics or reporting that meant to carry out a specific task and then finish. 
+The default behaviour of the pods is to attempt to restart the container in an effort to keep it running. this is by restartPolicy is set to always; 
+A job is used to run a set of pods to perform a give task to completion. 
+Pods are created one after the other. 
+second pod is created only after the first pod is finished. 
+completions -> successful job completion. 
+we can get the pods created parallely. add a property parallesism 
+
+
 
 
 
