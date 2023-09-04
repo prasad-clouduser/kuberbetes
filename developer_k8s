@@ -62,4 +62,4 @@ Admission controllers:
 3. apart of validting config, it can change the request itself or perform addtional operations before the pod get created. 
 
 There are built in administion controller available by default. 
-
+You can also enable or disable the adminission control by default. 
