@@ -70,4 +70,14 @@ Validate the request and allow or deny it -> vallidating admission controller.
 Webhook server need to be deployed in separate server or in own k8s cluster as deployment (then it should have service also) 
 then webhook need to be configured with rules (when to execute) and lcation of webhook server. 
 
+=====================================================================================
+
+when you run the kubectl get deployment which version is the command going to query? thats defined by the preferredversion. 
+if v1 is set to preferred version, then that is the command itwillquery. 
+
+if multiple version are present, only one version can be storage version. 
+this means if any object is created with the api version set to anything otherthan the storage version such as v1alpha1 or v1beta1 then those will be converted 
+to the storage version V1 before storing them into the etcd database. 
+
+storage version is the version in which an object is stored in etcd in respective of the version you have used in the yaml file while creating the object. 
 
