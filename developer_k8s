@@ -53,4 +53,13 @@ same process repeats for other pods of stateful set.
 
 staeteful set does not remove the PVC when restarted, it is reattached to same PVC and thus enable stabel storage for the pods. 
 
+=============================================================================================================
+
+Admission controllers: 
+
+1. There are some kind of things that you can't achieve with existing role based access controls. 
+2. administion controller helps us implement better security measures to enfore how a cluster is used. 
+3. apart of validting config, it can change the request itself or perform addtional operations before the pod get created. 
+
+There are built in administion controller available by default. 
 
