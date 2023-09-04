@@ -38,4 +38,19 @@ remove subdomaiin and hostname property and just keep serviceName field,
 the stateful set automatically assign the right host name for each pod, based on pod name and it automatically assigns the right subdomain.
 
 
+================================================================================================
+
+Storage in statefulset: 
+
+All pods created by stateful set tries to use the same volume (PVC)
+mutiple pods or multiple instances of your application to share and access the same storage. 
+thats how you configure it. and that also depends on the kind of volume created and provisioner are used. 
+
+How to crate PVC automatically?
+Instead of creating a PVC manually and then specifying it in the stateful set def file. 
+storage class provisions a volume on GCP and then creates a PVC and associates the PV with volume and binds the PVC to the PV.
+same process repeats for other pods of stateful set. 
+
+staeteful set does not remove the PVC when restarted, it is reattached to same PVC and thus enable stabel storage for the pods. 
+
 
