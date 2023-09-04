@@ -9,3 +9,33 @@ in stateful sets pods are creatd in a sequential order.
 after the first pod is deployed, it must be in a running state amd ready state before the next pod is deployed. 
 that helps us to dploy the master first and then slave1 and slave2.   
 
+================================================================================================================================
+
+ordered, graceful deployment. 
+Each pod gets a stable, unique DNS record on the network that any other application can use to access a pod. 
+podManagementPolicy property to instrcut the stateful set not follow the ordered approach. deploy them parallel. 
+
+================================================================
+
+Headless service: 
+
+1. we can't use the IP address of mysql in webserver pod. 
+2. pod dns address created from IP address, we can't use it either. 
+3. what we need is a service that does not load balance the requests but gives us a DNS entry to reach each pod. 
+
+headless service is created like a normal service, it does not have a IP address of its own. 
+it does not perform any load balancing. 
+All it does is create DNS entries for each pod using the pod name and a sub domain. 
+webserver points to the master pod now (mysql-0.mysql-h.default.svc.cloud.local) 
+diff between headless service and normal service --> setting clusterIP to None to headless service. 
+
+Deplolyment scenario
+under spec section of mysql pod definition, you must specify subDomain and hostname property to create a DNS record for each pod. 
+this way it creates the duplicate records of DNS which is not useful at all. 
+thats where stateful set differ from deployment. 
+
+remove subdomaiin and hostname property and just keep serviceName field, 
+the stateful set automatically assign the right host name for each pod, based on pod name and it automatically assigns the right subdomain.
+
+
+
