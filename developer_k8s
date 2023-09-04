@@ -63,3 +63,11 @@ Admission controllers:
 
 There are built in administion controller available by default. 
 You can also enable or disable the adminission control by default. 
+
+it can change or mutate the object itself before it is created. this is called mutating admission controllers. 
+Validate the request and allow or deny it -> vallidating admission controller. 
+
+Webhook server need to be deployed in separate server or in own k8s cluster as deployment (then it should have service also) 
+then webhook need to be configured with rules (when to execute) and lcation of webhook server. 
+
+
