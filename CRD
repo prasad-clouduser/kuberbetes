@@ -20,6 +20,17 @@ package the custom controller in pod deployment and run it in k8s as pod.
 kubernetes operator do what a human operator typically would do to manage a specific application. like installing, maintaining, taking backup and restoring backups. 
 fixing issues that may come across the application etc. 
 
+========================================================================================================================================
+
+Deployment strategy: 
+
+canery: only 1 % to new version. 
+once tested, delete canery deployment and upgrade the old deployment pods to new pods. 
+
+blue-green: deply the new pods also. 
+test the application. 
+then switch the traffic from old to new pods version. 
+
 
 
 
