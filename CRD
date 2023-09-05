@@ -1,1 +1,22 @@
+Controller is a process that runs in the background and its job is to continuosly monitor the status of the resources that its supposed to manage, 
+and when we create, update or delete the deploymment it makes the necessary changes on the cluster to match what we have done. 
+
+Several types of resource available and its own controller to monitor the status. 
+
+CRD -> used for creating our own resource definition file. like Kind: FlightTicket. 
+It just created the resources, but controller is required to do actual work. 
+
+Controller: 
+Monitor the status of the objects in ETCD and perform actions such as making calls to the fligh booking API to book, edit or cancel flight tickets. 
+and thats why we need a custom controller. 
+so controller is any process or code that runs in a loop that continuosly monitor the k8s cluster and listening to events of specific objects being changed, in this case flight 
+ticket object. 
+
+Python code can be used to write the controller but making api calls with it is expensive. 
+so use go lang it supports the library of caching and queuing mechanism. and build the code and run it with kube config file. 
+
+package the custom controller in pod deployment and run it in k8s as pod. 
+
+
+
 
