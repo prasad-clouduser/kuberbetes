@@ -17,6 +17,10 @@ so use go lang it supports the library of caching and queuing mechanism. and bui
 
 package the custom controller in pod deployment and run it in k8s as pod. 
 
+kubernetes operator do what a human operator typically would do to manage a specific application. like installing, maintaining, taking backup and restoring backups. 
+fixing issues that may come across the application etc. 
+
+
 
 
 
