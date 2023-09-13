@@ -92,6 +92,7 @@ and node affinity etc.
 what if you want to perform additonal checks, want to place the components of app on nodes after perfoming addtional checks. 
 /etc/kubernetes/my-scheduler/my-scheduler-config.yaml --> custom scheduler config which need to be specified in deployment. 
 This config file can be passed as configmap, passed as volumeMounts to containers. 
+leader elect parameter in config file tell which scheduler to use in multi master cluster. 
 
 we can instruct k8s to use custom scheduler instead of default scheduler. 
 
