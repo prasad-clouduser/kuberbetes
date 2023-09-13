@@ -97,3 +97,20 @@ leader elect parameter in config file tell which scheduler to use in multi maste
 we can instruct k8s to use custom scheduler instead of default scheduler. 
 
 kubectl get events -o wide -> fidn out events in current namespace which scheduler picked up
+
+=========================================================
+
+There are many pods that are ready to be scheduled. 
+the pods are in the scheduling queue (this is where pod wait to be scheduled) 
+pods are sorted based on priority defined (first create a priority class)
+
+phases: 
+scheduling queue -> Filtering -> scoring (score assigned based on free cpu left after allocating cpu for this pod) -> Binding (pod is bound to node) 
+each phase contains the extension points and k8s plugins plugged to those extension points. 
+We can introduce our own plugin and plug to any extention point. 
+
+Mutliple sheduler problem: 
+Race conditions while making scheduling decisions 
+for ex; one scheduler may scchedule a workload on a node without knowing that there is another scheduler scheduling a workload on that same node at the same time. 
+
+multiple scheduler runs in smae binary as opposed to separate binary for each scheduler. 
