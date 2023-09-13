@@ -83,3 +83,16 @@ kubectl works at the pod level, other components can not be created.
 
 static pod -> this is how kubeadmin tool setup the cluster. all control plan components can be deplyed as static pods. 
 
+=========================================
+
+default scheduler: 
+it has an algarithm that distributes the pods across evenly as well as takes into consideration various conditions we specify through taints and tolerations 
+and node affinity etc. 
+
+what if you want to perform additonal checks, want to place the components of app on nodes after perfoming addtional checks. 
+/etc/kubernetes/my-scheduler/my-scheduler-config.yaml --> custom scheduler config which need to be specified in deployment. 
+This config file can be passed as configmap, passed as volumeMounts to containers. 
+
+we can instruct k8s to use custom scheduler instead of default scheduler. 
+
+kubectl get events -o wide -> fidn out events in current namespace which scheduler picked up
