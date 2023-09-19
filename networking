@@ -73,10 +73,27 @@ how do we point our host to DNS server?
 every host has DNS resolution configuration file at /etc/resolv.conf 
 you add an entry init specifying address of the DNS server. 
 
+We can configure the DNS server itself to forward the unknown hostnames to the public nameserver on the internet. 
+
 top level domain --> they represent the intent of the website. --> .com 
 
 .com queries google and then google quieries www. 
 
+in google.com case: 
+. is the root thats where everything starts
+.com is top level domain 
+google is domain name assigned to google 
+www is subdomain. 
+
+launch apps.google.com from 
+
+first it goes to org internal DNS server, it does not know about it. 
+so it forwards the request to internet. 
+on the internet, the ip address of the server serving apps.google.com may be resolved with help of multiple DNS server. 
+A root dns server looks at your request and points you to a DNS server serving .coms
+.com dns server looks at request and forward to google dns server. then it provides the IP address of application. 
+
+search keyword in /etc/resolv.conf file for automatically appending mycompany.com to your "web" subdomain
 =============================================================
 NETWORK Namspaces: 
 
