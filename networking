@@ -24,6 +24,9 @@ Suppose system need access to the internet.
 1. You connect the router to the internet. (ip route add 172.217.194.0/24 via 192.168.2.1) 
 2. Then add a new route in yur routing table to route all traffic to the network 172.217.194 through your router. 
 
+ip link is to list and modify the interfaces on the host. 
+ip addr is to list ip addresses assigned to those interfaces. 
+ip addr add is to set the ip addresses on the interfaces. 
 ================================================================================================================================
 
 ip route add default via 192.168.2.1
