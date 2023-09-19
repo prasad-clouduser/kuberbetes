@@ -104,17 +104,19 @@ we create a separate namespace for the container (for isoliation to not see any 
 container see only processes run by it, thinks that its on its own host. 
 underlying host have visibility into all of the processes including >processes run by the container. 
 
+(root process) Its the same process running with diffrent process IDs inside and outside of the container. 
+
 our host has its own routing and ARP tables with info about the rest of the network. 
 we want to seal all of those details from the container. when container is created, we create a network namespace for it, that way it has no visibility to any 
 network related information on the host. 
-within namespace container has its own virutal interfaces, routing and ARP tables. 
+within namespace,the container has its own virutal interfaces, routing and ARP tables. container has its own interface.
 
-to view the interface on namespace just executte the ip netns exec red ip link ( you can understtand successfuly prevented containerr to see host interfaces with the namespaces) 
+to view the interface on namespace just execute the ip netns exec red ip link (you can understand successfuly prevented containerr to see host interfaces with the namespaces) 
 
 how do enable all namespaces to communicate with each other?
-just like the physcal world, yu create a virtual network inside the host. 
+just like the physical world, yu create a virtual network inside the host. 
 to create a network you need a switch, to create virtual network you need a virtual switch
-mutliple solutions available for this. native solutions (linux bridge ) and open V switch etc. 
+mutliple solutions available for this. native solutions (linux bridge) and open V switch etc. 
 We crate a interface on the host for this, which is just like other interfaces. (run ip link to see) 
 think of it as interface for the host and a switch for the namespaces.
 next step is to connect namespaces to this new virtual network switch. 
