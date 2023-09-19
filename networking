@@ -95,7 +95,7 @@ A root dns server looks at your request and points you to a DNS server serving .
 
 search keyword in /etc/resolv.conf file for automatically appending mycompany.com to your "web" subdomain
 =============================================================
-NETWORK Namspaces: 
+NETWORK NAMESPACES: 
 
 Network namespaces are used by containers like docker to implement network isolation. 
 contaners are separated from underlying host using namespaces. 
@@ -111,33 +111,70 @@ we want to seal all of those details from the container. when container is creat
 network related information on the host. 
 within namespace,the container has its own virutal interfaces, routing and ARP tables. container has its own interface.
 
-to view the interface on namespace just execute the ip netns exec red ip link (you can understand successfuly prevented containerr to see host interfaces with the namespaces) 
+To view the interface on namespace just execute the "ip link" on host and "ip netns exec red ip link" inside namespace (you can understand successfuly prevented container to see host interfaces with the namespaces) 
+(do the same for route and arp tables)
 
 how do enable all namespaces to communicate with each other?
-just like the physical world, yu create a virtual network inside the host. 
-to create a network you need a switch, to create virtual network you need a virtual switch
-mutliple solutions available for this. native solutions (linux bridge) and open V switch etc. 
-We crate a interface on the host for this, which is just like other interfaces. (run ip link to see) 
-think of it as interface for the host and a switch for the namespaces.
+Just like how would you connect two physical machines together using a cable to an ethernet interface on each machine. 
+You can connect two namespaces together using a virtual ethernet pair or a virtual cable. also called as pipe. 
+(then we create cable/pipe & virtual interfaces, attach to namespaces and two namespace cna communicate with each other) 
+
+
+Just like the physical world, you create a virtual network inside your host. 
+to create a network you need a switch, to create virtual network you need a virtual switch.
+u create a virtual switch within our host, and connect the namespaces to it.  
+multiple solutions available for this to create a virtual switch. native solutions (linux bridge) and open V switch etc. 
+To create a internal bridge network, we add a new interface to the host with ip link add command with type set to bridge.
+We create a interface (v-net-0) on the host for this, which is just like other interfaces. (run ip link to see) 
+for namespaces this interface is like a switch that it can connect to. 
+Think of it as interface for the host and a switch for the namespaces.
 next step is to connect namespaces to this new virtual network switch. 
-create two interfaces, attach one interface to red namespace (with netns command) and then other peer interface (connect to bridge network) to switch and made this as master. 
-similary do the same thing for other two namespaces. 
+create two interfaces, attach one interface to red namespace (veth-red) (with netns command) and then other peer interface "veth-red-br" (connect to bridge network and speciy the master for it v-net-0) to switch and made this as master. 
+similary do the same thing for other two namespaces. Assign the ip addresses to these interfaces and turn them up 
 
 How do we establish communication betweeen my host and these namespaces?
-remember bridge switch is actually a just another network interface on the host, just assign an ip address to this interface (which acts like a switch to namespaces)
+remember bridge switch is actually a just another network interface on the host, just assign an ip address to this interface, so we can reach the namespaces through it (which acts like a switch to namespaces)
 
+Remember entire network is still private and restricted within the host.
+from within namespaces you can't reach the outside world. 
+the only door to outside world is the ethernet port on the host.
 How to provide a gateway or door to the outside world from the namespace? Means how to ping other hosts (connected with LAN) from this host namespaces?
+we need to add a entry in the routing table to provide a gateway or door to outside world. 
 
 A door or gateway is a system on the local network that connects to the other network
-so what is a system that has one interface on the network local to the blue namespace which 192.168.15 network and is also connected to the outside LAN network.  
+so what is a system that has one interface on the network local to the blue namespace which is 192.168.15 network and is also connected to the outside LAN network.  
 our local host is the gateway that connects the two networks together ( namespaces network 192.168.15.0, we assigned IP address to v-net-0 interface which is like switch for 
 namespaces which can ping each other) 
 we can add a route entry in the blue namespace to say route all traffic to the 192.168.1 network through the gateway at 192.168.15.5 (v-net-0 ip address) 
 because blue namespace can only reach the gateway in its local network at 192.168.15.5, we can't use other interface ip (192.168.1.2) 
+The default gateway should be reachable from your namespace when you add it to your route.
+When you try to ping, you no longer get the network unreachable msg (ip netns exec blue ping 192.168.1.3) from blue namespace. but still you dnt get any response back from ping. 
+
+From our home network, we try to reach the external internet through our router. 
+our home network has our internal IP addresses that the destination network don't know about so they can't reach back.
+For this, we need NAT enable on our host acting as a gateway here so that it can send the msgs to the LAN in its own name with its own address. 
+
+how to add NAT functioanlity to our host? you should do that using IP tables. 
+Add a new rule in the NAT IP table in the post routing chain to masquerade or replace the from address on all packets coming from source network (192.168.15.0) with its own ip address. 
+that way anyone receivign these packets outside the network will think they are coming from the host and not from within the namespaces. (ping now and try)
+
+sicne these namespaces can reach any network our host can reach, we can simply say that, to reach any external network, talk to our host. 
+ip netns exec blue ip route add default via 192.168.15.5
+we should now be able to reach the outside world from within namespaces. 
 
 user try to reach other Host, just NAT the IPs 192.168.15.5 (so that these will be replaced with its own ip addresses) so that other systems can respond back.
 for this we need NAT enable on our host acting as gateway here so that it can send the msgs to the LAN in its own name with its own address.
 MASCURADE all packets coming from the source network withits own IP addresse) 
+
+how to reach webapp hosted on container on port from external network:
+
+Two options: 
+
+1. The first is to give away the identity of the private network to the second host. so we basically add an ip route entry to the second host telling the host that 
+the network 192.168.15 can be reached through the host at 192.168.1.2
+2. is to add port forwarding rule using ip tables to say any traffic coming to port 80 on the local host is to be forwarded to port 80 on the IP assigned to the blue namespace. 
+
+
 
 
 =======================================================================================================================
