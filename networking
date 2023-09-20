@@ -184,40 +184,39 @@ Docker Networking:
 
 bridge: 
 an internal private network is created which the docker host and container attach to. 
-network has address 172.17.0.0 by default and each device connecting to this network get their own internal private network address on this network. 4
+network has address 172.17.0.0 by default and each device connecting to this network get their own internal private network address on this network. 
 
 after installing docker it creates network called bridge. 
-but it display as docker0 in the command ip link 
-check the interface of both the containers with ip link -n namespace on container and ip link on host. 
-nginx its a webapplication serving web page on port 80 
+but it display as docker0 in the command "ip link" 
+check the interfaces of both the containers with "ip link -n namespace" on container and "ip link" on host. 
+nginx, its a web application serving web page on port 80 
 How does docker forward the traffic from one port to another?
 Docker adds the rule to the docker chain and sets the destination to include the containers IP as well. 
 port mapping creates the NAT rules for port mapping. to forward traffic from 8080 to container port 80
 here also two pairs of network interfaces are created
 docker0 is like switch and other interface on network namespace.
 
-======================================================================================================================================
+=================================================================================================================================================================
 
 CNI: 
 
 For ex: when rocket or k8s creates a new container they call the bridge program and pass the container ID and namespace to get networking configured for that container. 
-
 bridge program you create to attach the namespace to the network -> automated script.
 
-suppose you want to create it for other networking type automated script
+suppose you want to create it for other networking type automated script:
 1. how do you make sure the program (like bridge) you create will work correctly with these runtimes?
 2. how do we know that container runtimes like k8s or rocket will invoke your program correctly?
 3. thats where we need some standards defined. 
 4. A standard that define how a program should look. How container runtime should invoke them so that everyone can adhere to a single set of standards. 
-and develp solution that work across runtimes. thats where container network interface comes in. 
+and develop solution that work across runtimes. thats where container network interface comes in. 
 
 CNI is set of standards that define how a program should be developed to solve networking challenges in a contaienr runtime environments. 
 The programes are referred to as plugins. In this case the bridge program that we referring is a plugin for CNI. 
-CNI defines some responsibilites to Containers Runtimes and Plugins. (check the list) 
+CNI defines some responsibilites to Containers Runtimes and Plugins. (check the list). 
 As long as container runtimes and plugins adhere to these standards. they can all live together in harmony. Any runtime should be able to work with any plugin. 
 CNI comes with a set of supported plugins already such as bridge, VLAN, IPVLAN, MACVLAN one for windows as well as IPAM Plugins like Host Local and DHCP. 
 
-other plugins availble from third party org as well, some examples are weave, flannel, cilium, VMWare NSX, calico etc 
+other plugins available from third party org as well, some examples are weave, flannel, cilium, VMWare NSX, calico etc 
 all of these container runtimes (rkt, mesos, k8s) implements CNI standards. 
 
 Docker does not implement CNI, own set of standards it has, called CNM, however we can use these all plugins with some workaround with docker.
@@ -227,14 +226,29 @@ How doccker creates?
 1. when k8s creates docker containers, it creates them on NONE network. 
 2. it then invokes the configured CNI Plugins who takes care of the rest of the configuration. 
 
-==================================================================================
+==========================================================================================================================================================================
 
 Cluster Networking: 
 
 networking confi required on the master and worker nodes in k8s cluster. 
+Each node must have at least one interface connected to a network, each interface must have an address configured. 
+unique host as well as unique mac address. 
 check the ports for the control plan components. 
 
-==========================================================================================
+========================================================================================================================================================
+POD networking: 
+
+after creating bridge networking, it is time to assign the IP address to the bridge interfaces or networks. 
+we decided each bridge network will be on its own subnet. choose any private address range. 
+next we set the IP address for the bridge interface (V-net-0). then run the steps to attach namespace to bridge network. 
+
+Instead of creating routes on each node, a better solution is to do that on a router, if you have one in your network. 
+and point all hosts to use that as the default gateway. That way you can easily manage routes to all networks in the routing table on the router. 
+With that, the individual virtual networks we created with the address 10.244.1.0/24 on each node now form a single large network with the address 10.244.0.0/16
+
+How to run script automatically when pod is created on k8s? thats where CNI comes in, acting as the middleman. (complex to do manuall steps in large pod env) 
+CNI tells k8s that this is how you should call a script as soon as you create a container. 
+And CNI tells us this is how your script should look like. 
 
 Talked about network that connects nodes together. 
 there is also the another layer of networking that crucial for cluster functinaling that networking at pod layer. 
