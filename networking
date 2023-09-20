@@ -276,6 +276,8 @@ in this case it finds the bridge confi file. if multiple files are there, it wil
 
 CNI Weave: 
 
+Instead of adding routes on nodes for traffic to go to pod on another node, we can main thesee routes on router outside.
+
 when a packet is sent from one pod to another pod , it goes out to the network, to the router and finds its way to the node that hosts the pod. 
 This will be a complex process if we have many nodes and many pods in a big cluster. routing table not enough (office can't keep track all routes) 
 
