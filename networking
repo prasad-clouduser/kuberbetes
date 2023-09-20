@@ -308,6 +308,11 @@ once on the other side the other weave agent retrieve the packet and decasulates
 
 IP Address Management - Weave: 
 
+
+How are the virtual bridge networks in the nodes assigned an ip subnet. 
+how are the pods assigned an IP. where is this info is stored? and who is responsible for ensuring there are no duplicate IPs assigned. 
+
+
 CNI says it is the responsibility of the CNI plugin the network solution provider to take care of assigning IPs to the containers. 
 previously we used a script (basic plugin ) we built earlier which took care of assigning IP addresses within this plugin.
 How do we manage this ips to make sure duplicate IPs are not assigned to pods. 
@@ -351,6 +356,8 @@ services ip address range specified in the kube api server's option called --ser
 when setup pod networking, I provided a pod network CIDR range of 10.244.0.0/16
 these should not overlap.
 
+check the iptable NAT rules to find out masquarading. from service ip to pod ip, node ip to backend pods. 
+also check the logs of the service cat /var/log/kube-proxy.log
 =====================================================================================================================================
 
 Cluster DNS: 
