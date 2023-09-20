@@ -276,10 +276,15 @@ in this case it finds the bridge confi file. if multiple files are there, it wil
 
 CNI Weave: 
 
-Instead of adding routes on nodes for traffic to go to pod on another node, we can main thesee routes on router outside.
+Instead of adding routes on nodes for traffic to go to pod on another node, we can create thesee routes on router outside.( Instead of creating routes on each node )
 
 when a packet is sent from one pod to another pod , it goes out to the network, to the router and finds its way to the node that hosts the pod. 
 This will be a complex process if we have many nodes and many pods in a big cluster. routing table not enough (office can't keep track all routes) 
+
+When packet is send from say office 10 to office 3, the shipping agent in that site intercepts the package and looks at the target office name, he knows exactly in 
+which site and department that office is in, through his little internal network with his peers on the other sites, he then place his package into his own new package
+with destination address set to the target site location. once package arrive at destination it then again intercepts by the agent on that site, he open the packet,
+retrieve the original packet and delivers it to right department. 
 
 where weave CNI plugin is deployed on a cluster, it deploys an agent or service on each node. 
 tbey communicate with each other to exchange info regarding the nodes and networks and pods within them. 
