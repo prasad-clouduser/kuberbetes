@@ -3,7 +3,11 @@ On windows you must rely on virtualization software like Hyper-v or VMWare works
 There are other solutions also available to run k8s components as docker containers on windows VMs. Even then the docker images are linux based, and under the hoods they run on a small linux OS created by hyper-v 
 for running linux docker containers. 
 
-minikube -> relys on one of the virtualization software like oracle virtual box to create virtual machines that run the k8s cluster components. 
+minikube -> relys on one of the virtualization software like oracle virtual box to create virtual machines that run the k8s cluster components.
+kubeadm -> single/multi node cluster setup
+
+Turnkey solution -> VMS should be available prior, then deploy using certified k8s solution (open shift, vagrant, PKS, etc)
+hosted -> gke, eks etc. openshift online. 
 
 ======================================================================================================
 
@@ -25,7 +29,6 @@ scheduler also same
 if etcd on the control plan node, if control node crashes, etcd also goes down. if it is on separate cluster, it won't go down. 
 etcd; if any component want to reach, it can reach the etcd server at any of its instances. 
 u can read and write data thorugh any of the available etcd server instances. thats why we specify the list of etcd server in kubeapi server config.
-
 
 ===========================================================================================================================================
 if multiple writes comes to write to etcd server. 
