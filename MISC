@@ -48,12 +48,15 @@ recommneded to have a min 3 instances in an etcd cluster. that way it offers fal
 
 Quorum is required to say cluster is alive. 
 
-fault tolerance: the number of nodes that you can afford to lose hwile keeping the cluster alive. 
+fault tolerance: the number of nodes that you can afford to lose while keeping the cluster alive. 
 
 leader election is done by raft algathrim, it uses timer whicher completes first will be considered as a leader by taking consent from other two members in the cluster. when other two stops reciving 
 notifications from leader, they start its own timers to elect the leader. 
 
+etcd option: --initial-cluster option -> this is how each etcd service knows that it is part of a cluster and where its peers are. 
+etcdctl utility has two API versoins V2 and V3 so cmds work different in each version. V2 is the default version. 
 
+choose the number of etcd nodes odd number for network segmentation issue . if network is partitioned/segmented for some reason you will meet the quorum and cluster will be functional 
 ========================================================================================================================================================================
 
 virtual box - this is our hypervisor this is ultimately responsible for running our virtual machines. 
