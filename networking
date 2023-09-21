@@ -418,6 +418,9 @@ for these two load balancer we need to provision one more lb on top of these two
 ingress is layer 7 load balancer built into the k8s cluster that can be configured using native k8s primitives. Just like anyother that we have been working with k8s. 
 even with ingress yu still need to expose it to make it accessible outside the cluster. you still need to publish it as a nodeport or with cloud native load balancer. 
 
+without ingress, I would use a reverse proxy or load balancing solution like nginx or hproxy or trafic i would deploy them on my k8s cluster and configure them 
+to route traffic to other services. the configuration involves defines url routes, configuring ssl certs etc 
+
 ingress is implemented by kubernetes in kind of the same way. you first deploy a supported solution which happens to be any of these listed here and then specify the
 set of rules to configure the ingress. The solution you deploy is called as an ingress controller. (this is same as reverse proxy or load balacing solutin nginx, haproxy, trafik and configure set of rules) 
 the set of rule you configure is called as ingress resources.
