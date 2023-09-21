@@ -31,6 +31,8 @@ etcd; if any component want to reach, it can reach the etcd server at any of its
 u can read and write data thorugh any of the available etcd server instances. thats why we specify the list of etcd server in kubeapi server config.
 
 ===========================================================================================================================================
+etcd -> stacked topology -> etcd present on control plane node. 
+
 if multiple writes comes to write to etcd server. 
 
 only one of the instances is responsbile for processing the writes. 
@@ -48,7 +50,7 @@ Quorum is required to say cluster is alive.
 
 fault tolerance: the number of nodes that you can afford to lose hwile keeping the cluster alive. 
 
-leader election is done by raft algathrim, it uses timer whicher completes first will be considered as a leader by taking consent from other two. when other two stops reciving 
+leader election is done by raft algathrim, it uses timer whicher completes first will be considered as a leader by taking consent from other two members in the cluster. when other two stops reciving 
 notifications from leader, they start its own timers to elect the leader. 
 
 
