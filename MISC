@@ -59,9 +59,12 @@ etcdctl utility has two API versoins V2 and V3 so cmds work different in each ve
 choose the number of etcd nodes odd number for network segmentation issue . if network is partitioned/segmented for some reason you will meet the quorum and cluster will be functional 
 ========================================================================================================================================================================
 
+Installation with kubeadm:
 virtual box - this is our hypervisor this is ultimately responsible for running our virtual machines. 
-vagrant -> automatiion tool it really easy to spin up a whole bunch of VMs. 
+vagrant -> automatiion tool it really easy to spin up a whole bunch of VMs.  githup repository available for this. 
+you can spin up VMs with vagrantfile. 
 ==========================================================================================================
+Demo of installation: 
 
 both kubelet and container runtime need to interface with these control groups to enfore various resource management for pods. 
 so think of things like setting the CPU and Memory requests and limits. These are all things that need to be kind of communicated to the c groups. 
